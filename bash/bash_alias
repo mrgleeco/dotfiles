@@ -1,0 +1,47 @@
+
+fast_find() { 
+    find . -name ${1} |  grep -v "/.git/"  | xargs ls -dF | less -FX  
+}
+
+alias ff=fast_find;
+
+# alias urldec="perl -ane 'for(1..2) { s/%([\da-f]{2})/pack("c",hex($1))/ige; } print;' ";
+# alias urldec='perl -e \'s/%([\da-f]{2})/pack("c",hex($1))/ige for @ARGV;  map { print "\n$_\n" } @ARGV\' ';
+# alias urldec="perl -e 's/%([\da-f]{2})/pack(\"c\",hex($1))/ige for @ARGV;  map { print qq{\n\$_\n} } @ARGV' ";
+
+
+alias ll='ls -lah'
+alias la='ls -lA'
+alias lR='ls -lRhG | less -FX'
+alias h='history' 
+alias hl='history | less' 
+alias j='jobs'
+alias c='clear'
+alias P='perl -c'
+alias l='less -fK' # -f force binary files; -F  -K exit on ^c
+alias loc='locate'
+alias px='perceus'
+
+alias tsq=' sort | uniq -c | sort -rn'
+alias socatty='socat -u TCP4-LISTEN:3334,reuseaddr,fork OPEN:/tmp/log.socatty.$USER,creat,append'
+
+alias cf-sql="~/local/postgres/bin/psql dev_cf"
+alias cf-env="source ~/local/cf-setup/auto/default_env.sh"
+
+
+alias hi='history  |less'
+
+# OSX -- 
+case  $SYS in
+  Darwin)
+
+    ;;
+
+  Linux)
+
+    alias git='/usr/local/git/bin/git'
+    ;;
+esac;
+
+
+

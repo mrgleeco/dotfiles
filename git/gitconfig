@@ -1,0 +1,23 @@
+[user]
+    name = Greg Lee Coleman
+    email = gleeco@cloudflare.com
+[alias]
+    st = status
+    ci = commit
+    br = branch
+    co = checkout
+    hist = log --name-status
+    stati = status --untracked-files=no
+    gpr='git pull --rebase; [ -d ".git" ] && git submodule update --init --recursive'
+    create-pull-request = !sh -c 'stash pull-request $0'
+    pullreq = !sh -c 'stash pull-request $0'
+[color]
+    branch = auto
+    diff = auto
+    interactive = auto
+    status = auto
+[core]
+    editor = vim
+    pager = less -+$LESS -FRX
+[merge]
+    tool = vimdiff

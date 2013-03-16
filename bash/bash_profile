@@ -1,0 +1,67 @@
+
+
+export SYS=`uname -s`;
+#
+
+
+#  load_common;
+
+# export PS1='\[\e[0;31m\]$(dirs_depth)\[\e[0;32m\]\u$(extra_color)@\[\e[0;32m\]\h\[\e[0m\]\[\e[0;33m\]$(parse_git_branch)\[\e[0m\]:\w\$ '']]]]]]'
+export PS1='[\u@\h:\w]$ '
+export EDITOR=/usr/bin/vim
+export PAGER=/usr/bin/less
+export ACK_PAGER=/usr/bin/less
+
+
+export HISTSIZE=1000
+export HISTFILEIZE=5000
+
+  #
+case $SYS in
+    Darwin)
+        export PATH=/bin:/usr/bin:/usr/local/bin:/usr/sbin:/sbin:/usr/local/git/bin:/Developer/usr/bin
+        ;;
+    Linux)
+        export PATH=/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin
+        export GOROOT=$HOME/local/go
+      ;;
+esac;
+
+
+
+#
+# WINDOWING
+#
+case "$TERM" in
+    xterm-color) color_prompt=yes;;
+esac
+
+
+#
+# SSH: reconnect to our agent
+#
+
+{
+    F=$HOME/.ssh/curr_agent.sh
+    if [ -f $F ]; then
+        is=`grep PID $F | perl -ane 'print (m@PID=(\d+)@ and kill(0,$1) ) ? $1 : 0' `
+        if [ $is == 0 ]; then
+            ssh-agent > $F
+            echo "new agent; ssh-add to initialize"
+        else
+            echo "reusing current agent at pid.$is"
+         fi
+        source $F
+    else
+        ssh-agent  >  $F
+        source $F
+    fi
+}
+
+
+
+test -x $HOME/.bash_alias     && source $HOME/.bash_alias
+test -x $HOME/.bash_alias_ssh && source $HOME/.bash_alias_ssh 
+test -x $HOME/local/bashrc    && for i in $HOME/local/bashrc/enabled/*.sh; do source $i; done
+
+

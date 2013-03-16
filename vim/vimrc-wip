@@ -1,0 +1,188 @@
+
+
+" to see all scripts loaded,  :scriptnames
+source $HOME/code/dotfiles/vim/bundles.vim
+
+syntax on
+set vb                          " visual bell
+set number
+set ruler
+set nowrap
+set encoding=utf-8
+
+highlight clear Search
+
+set background=dark
+colorscheme jellybeans
+
+
+
+" Don't redraw while executing macros (good performance config)
+set lazyredraw
+
+" For regular expressions turn magic on
+" set magic
+
+
+" Whitespace stuff
+set tabstop=2 " Display <Tab>s as 2-spaces.
+set shiftwidth=2 " Shift operations should use the same amount.
+"set softtabstop=2 " Use a mixture of spaces and <Tab>s to complete editing operations
+set expandtab
+"set noexpandtab
+set list listchars=tab:▸\ ,eol:¬,trail:•
+
+" Searching
+set hlsearch                    " Highlight search results
+set incsearch                   " Makes search act like search in modern browsers
+set gdefault                    " automatically set "/g" at the end of :substution commands
+set ignorecase                  " Ignore case when searching
+set smartcase                   " When searching try to be smart about cases 
+nnoremap / /\v
+vnoremap / /\v
+
+" Auto formatting
+set autoindent " automatically indent text
+set formatoptions+=n1 " add formatting numbered list to autoformat
+
+" Spelling options
+set spell spelllang=en_us
+
+" Moving around windows
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+"Misc
+set ttyfast " using a fast terminal
+nnoremap ; :
+inoremap jj <ESC>
+
+" Tab completion
+set wildmode=list:longest,list:full
+set wildignore+=*.o,*.obj,.git,*.rbc,*.class,*.swp,.svn,vendor/gems/*
+
+
+" see below
+" set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
+set laststatus=2                    " Always show the status line
+
+
+" Remember last location in file
+" if has("autocmd")
+"  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+"    \| exe "normal g'\"" | endif
+"endif
+
+" Allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+" highlight reverse
+
+" remap <F1> to turning off search highlighting (default: help)
+map <F1> :nohl<CR>
+imap <F1> <ESC>:nohl<CR> i
+
+" Use modeline overrides
+set modeline
+set modelines=10
+
+" set the number of undos
+" undolevels 4
+set ul=4
+
+" Directories for swp files
+set backupdir=$HOME/.vim/backup
+set directory=$HOME/.vim/backup
+if version >= 703
+  set undofile
+  set undodir=$HOME/.vim/undo
+endif
+
+" Reformat the current paragraph according to current 'textwidth' with ^]
+nmap <C-]> gqap
+vmap <C-]> gq
+imap <C-]> <C-O>gqap
+
+" Tabs
+map <Leader>tp :tabp<CR>
+map <Leader>tn :tabnext<CR>
+
+" Show (partial) command in the status line
+set showcmd
+
+" Tagbar Configuration
+nmap <Leader>tb :TagbarToggle<CR>
+" Auto-focus on open, close on selection
+let g:tagbar_autoclose = 1
+
+
+"
+" pathogen autoloading
+" 
+call pathogen#infect()
+
+
+" autocmd vimenter * NERDTree           " add Nerdtree at startup
+" nerdtree with ctrl-n
+map <C-n> :NERDTreeToggle<CR>
+
+" prevent accidental :Q going in to EX mode
+map Q :q
+
+set tabpagemax=10
+
+
+
+" check perl code with :make
+autocmd FileType perl set makeprg=perl\ -c\ %\ $*
+
+" 
+" perl module scaffold
+autocmd BufNewFile  *.pm        0r ~/.vim/skeleton.pm
+
+
+" let g:Perl_BraceOnNewLine     = "yes"
+
+"  don't like/understand these!? 
+" let perl_fold           = 1
+" let perl_fold_blocks    = 1
+" support @{${"foo"}}
+:let perl_extended_vars = 1
+
+:filetype plugin on
+let g:Perl_AuthorName      = 'Gregory Coleman'
+let g:Perl_AuthorRef       = 'gleeco'
+let g:Perl_Email           = 'gleeco@cloudflare.com'
+let g:Perl_Company         = 'Cloudlare'
+let g:Perl_BraceOnNewLine   = "yes"
+
+" fix so that mouse-button (middle) paste during insert just works
+" ie. paste with a comment will still keep indenting by default;
+" but hitting <F7> before the paste will do the right thing. 
+"
+set nopaste
+nmap <F7> :set paste! paste?<CR>
+imap <F7> <C-o>:set paste!<CR>
+vmap <F7> <Esc>:set paste!<CR>gv
+nnoremap <MiddleMouse> i<MiddleMouse>
+vnoremap <MiddleMouse> s<MiddleMouse>
+set pastetoggle=<F7> mouse=rnv
+
+"set ttymouse=xterm2
+set mouse=a
+set t_Co=256
+
+
+
+set t_Co=256 "tell the term has 256 colors
+
+
+" to use jsbeautify: 
+" <leader>ff
+" where <leader> is a backslash
+
+
+
+

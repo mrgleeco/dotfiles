@@ -1,0 +1,68 @@
+
+set tabstop=4
+set shiftwidth=4
+set expandtab
+highlight clear Search
+
+set background=dark
+syntax on
+
+" visual bell
+set vb
+
+"
+" pathogen autoloading...nerdtab, etc.
+" 
+call pathogen#infect()
+
+
+
+" prevent accidental :Q going in to EX mode
+map Q :q
+
+set tabpagemax=10
+
+" check perl code with :make
+autocmd FileType perl set makeprg=perl\ -c\ %\ $*
+
+" 
+autocmd BufNewFile  *.pm        0r ~/.vim/skeleton.pm
+
+
+" let g:Perl_BraceOnNewLine     = "yes"
+
+"  don't like/understand these!? 
+" let perl_fold           = 1
+" let perl_fold_blocks    = 1
+" support @{${"foo"}}
+:let perl_extended_vars = 1
+
+:filetype plugin on
+let g:Perl_AuthorName      = 'Gregory Coleman'
+let g:Perl_AuthorRef       = 'gleeco'
+let g:Perl_Email           = 'gleeco@cloudflare.com'
+let g:Perl_Company         = 'Cloudlare'
+let g:Perl_BraceOnNewLine   = "yes"
+
+" fix so that mouse-button (middle) paste during insert just works
+" ie. paste with a comment will still keep indenting by default;
+" but hitting <F7> before the paste will do the right thing. 
+"
+set nopaste
+nmap <F7> :set paste! paste?<CR>
+imap <F7> <C-o>:set paste!<CR>
+vmap <F7> <Esc>:set paste!<CR>gv
+nnoremap <MiddleMouse> i<MiddleMouse>
+vnoremap <MiddleMouse> s<MiddleMouse>
+set pastetoggle=<F7> mouse=rnv
+set ttymouse=xterm
+
+
+" add Nerdtree
+" autocmd vimenter * NERDTree
+
+
+
+" to use jsbeautify: 
+" <leader>ff
+" where <leader> is a backslash
