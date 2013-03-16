@@ -1,0 +1,97 @@
+  :so %       " reload the .vimrc you are editing"
+
+  :set number  " turn on numbering"
+  :set nu         "same
+  :set nonumber   "turn off numbering"
+  :set nonu         "same
+
+
+Working with tabs
+-----------------
+
+:vsp {file}       aka vsplit
+:tabnew  {file}
+:tabedit {file}   edit specified file in a new tab
+:tabfind {file}   open a new tab with filename given, searching the 'path' to find it
+:tabclose         close current tab
+:tabclose {i}     close i-th tab
+:tabonly          close all other tabs (show only the current tab)
+
+
+gt            go to next tab
+gT            go to previous tab
+{i}gt         go to tab in position i
+
+
+Working with multiple windows  aka panes
+------------------------------
+
+   :e filename      - edit another file
+   :split filename  - split window and load another file
+   ctrl-w up arrow  - move cursor up a window
+   ctrl-w ctrl-w    - move cursor to another window (cycle)
+   ctrl-w_          - maximize current window
+   ctrl-w=          - make all equal size
+   10 ctrl-w+       - increase window size by 10 lines
+   :vsplit file     - vertical split
+   :sview file      - same as split, but readonly
+   :hide            - close current window
+   :only            - keep only this window open
+   :ls              - show current buffers
+   :b 2             - open buffer #2 in this window
+
+
+
+Vim viewport keybinding quick reference
+----------------------------------------
+  :sp will split the Vim window horizontally. Can be written out entirely as :split .
+  :vsp will split the Vim window vertically. Can be written out as :vsplit .
+  Ctrl-w Ctrl-w moves between Vim viewports.
+  Ctrl-w j moves one viewport down.
+  Ctrl-w k moves one viewport up.
+  Ctrl-w h moves one viewport to the left.
+  Ctrl-w l moves one viewport to the right.
+  Ctrl-w = tells Vim to resize viewports to be of equal size.
+  Ctrl-w - reduce active viewport by one line.
+  Ctrl-w + increase active viewport by one line.
+  Ctrl-w q will close the active window.
+  Ctrl-w r will rotate windows to the right.
+  Ctrl-w R will rotate windows to the left.
+
+
+
+Vim folding commands
+--------------------
+  zf#j creates a fold from the cursor down # lines.
+  zf/string creates a fold from the cursor to string .
+  zj moves the cursor to the next fold.
+  zk moves the cursor to the previous fold.
+  zo opens a fold at the cursor.
+  zO opens all folds at the cursor.
+  zm increases the foldlevel by one.
+  zM closes all open folds.
+  zr decreases the foldlevel by one.
+  zR decreases the foldlevel to zero -- all folds will be open.
+  zd deletes the fold at the cursor.
+  zE deletes all folds.
+  [z move to start of open fold.
+  ]z move to end of open fold.
+
+
+
+Chars/Unicode
+-------------
+
+Fun With Unicode ٩(●̮̮̃•̃)۶
+  Following up on the last post, you can also use CTRL-V to enter unicode characters. All you have to do is the following:
+
+  CTRL-V u (unicode character hex code)
+
+  Note that you can also combine multi-byte character
+
+When typing in insert or ex mode, hiting CTRL-V allows you to enter a literal character. Some examples:
+
+  CTRL-V CTRL-M # enters a literal carriage-return \r
+  CTRL-V 10 <enter> # enters a null character
+
+
