@@ -45,8 +45,8 @@ vnoremap / /\v
 set autoindent " automatically indent text
 set formatoptions+=n1 " add formatting numbered list to autoformat
 
-" Spelling options
-set spell spelllang=en_us
+" Spelling options -- this highlights waaay too much
+" set spell spelllang=en_us
 
 " Moving around windows
 nnoremap <C-h> <C-w>h
