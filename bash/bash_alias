@@ -35,11 +35,11 @@ alias hi='history  |less'
 case  $SYS in
   Darwin)
 
+    alias git='/usr/local/git/bin/git'
     ;;
 
   Linux)
 
-    alias git='/usr/local/git/bin/git'
     ;;
 esac;
 

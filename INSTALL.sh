@@ -19,9 +19,12 @@ fi
 
 # vim stuff
 
-mkdir -p ~/.vim/{bundle,bundle-manual}
+
+mkdir -p ~/.vim/{bundle,bundle-manual,backup}
+cp -r vim/autoload ~/.vim/
+
 cp vim/bundle_submodule_init.pl ~/.vim
-( cd ~/.vim && perl submodule_init.pl )
+( cd ~/.vim && perl bundle_submodule_init.pl )
 ( cd vim && for f in vimrc*; do cp $f  ~/.$f; done )
 
 

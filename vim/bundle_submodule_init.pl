@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-
+# keep list of vim repos we care to use
 my $repo = [
 	"git://github.com/Raimondi/delimitMate.git",
 	"git://github.com/Lokaltog/vim-powerline.git",
@@ -35,8 +35,9 @@ my $repo = [
 for my $r(@$repo){
     $r =~ m@.*/(.*?).git$@ or next;
     -d $1   and next;
-    print qq{ cd ./bundle && git submodule $r \n};
-    print qx{ cd ./bundle && git submodule $r };
+    my $cmd = qq{ cd ./bundle && git clone $r };
+    print "CMD>>  $cmd \n";
+    print qx{ $cmd };
 }
 
 
