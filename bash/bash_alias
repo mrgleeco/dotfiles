@@ -28,8 +28,8 @@ alias socatty='socat -u TCP4-LISTEN:3334,reuseaddr,fork OPEN:/tmp/log.socatty.$U
 alias cf-sql="~/local/postgres/bin/psql dev_cf"
 alias cf-env="source ~/local/cf-setup/auto/default_env.sh"
 
-
-alias hi='history  |less'
+# not quite an alias...
+export DATE=$(date -u +%Y%m%d)
 
 # OSX -- 
 case  $SYS in
