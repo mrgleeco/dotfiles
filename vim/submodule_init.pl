@@ -7,7 +7,7 @@ use warnings;
 
 my %Repo = ();
 
-$Repo{color} =  [
+$Repo{colors} =  [
 	"git://github.com/nanotech/jellybeans.vim.git",
 	"git://github.com/Lokaltog/vim-distinguished.git",
 ];

@@ -23,8 +23,8 @@ fi
 mkdir -p ~/.vim/{bundle,bundle-manual,backup}
 cp -r vim/autoload ~/.vim/
 
-cp vim/bundle_submodule_init.pl ~/.vim
-( cd ~/.vim && perl bundle_submodule_init.pl )
+cp vim/submodule_init.pl ~/.vim
+( cd ~/.vim && perl submodule_init.pl )
 ( cd vim && for f in vimrc*; do cp $f  ~/.$f; done )
 
 
