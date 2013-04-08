@@ -1,7 +1,20 @@
 #!/usr/bin/env perl
 
+
+use strict;
+use warnings;
+
+
+my %Repo = ();
+
+$Repo{color} =  [
+	"git://github.com/nanotech/jellybeans.vim.git",
+	"git://github.com/Lokaltog/vim-distinguished.git",
+];
+
+
 # keep list of vim repos we care to use
-my $repo = [
+$Repo{bundle} =  [
 	"git://github.com/Raimondi/delimitMate.git",
 	"git://github.com/Lokaltog/vim-powerline.git",
 	"git://github.com/Shougo/neocomplcache.git",
@@ -17,7 +30,6 @@ my $repo = [
 	"git://github.com/mattn/webapi-vim.git",
 	"git://github.com/mileszs/ack.vim.git",
 	"git://github.com/mutewinter/nginx.vim.git",
-	"git://github.com/nanotech/jellybeans.vim.git",
 	"git://github.com/nsf/gocode.git",
 	"git://github.com/othree/html5.vim.git",
 	"git://github.com/pangloss/vim-javascript.git",
@@ -30,14 +42,18 @@ my $repo = [
 	"git://github.com/vim-scripts/matchit.zip.git",
 ];
 
--d './bundle' or print qx{ mkdir -p ./bundle };
 
-for my $r(@$repo){
-    $r =~ m@.*/(.*?).git$@ or next;
-    -d $1   and next;
-    my $cmd = qq{ cd ./bundle && git clone $r };
-    print "CMD>>  $cmd \n";
-    print qx{ $cmd };
+
+for my $type ( keys %Repo ) {
+	-d "./$type" or print "creating dir ./$type\n",  qx{ mkdir -p ./$type };
+	my $repo = $Repo{$type};
+	for my $r(@$repo){
+		$r =~ m@.*/(.*?).git$@  or next;
+		-d "$type/$1"  and next;
+		my $cmd = qq{ git clone $r ./$type/$1 };
+		print "CMD>>  $cmd \n";
+		print qx{ $cmd };
+	}
 }
 
 
