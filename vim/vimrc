@@ -1,5 +1,10 @@
+"
+" if editing this file, reload with  :so %
+"
+if match($TERM, "screen")!=-1
+  set term=xterm
+endif
 
-" if editing this file, reload with 
 
 " to see all scripts loaded,  :scriptnames
 source $HOME/code/dotfiles/vim/bundles.vim
@@ -8,14 +13,14 @@ syntax on
 set vb                          " visual bell
 set number
 set ruler
-set nowrap
+set wrap                        " set nowrap
 set encoding=utf-8
 
-" highlight clear Search
 
-set background=dark
-" colorscheme jellybeans    " too dark for me -g
+" set background=dark
+colorscheme jellybeans    " too dark for me -g
 
+" highlight Visual term=reverse gui=reverse
 
 
 " Don't redraw while executing macros (good performance config)
@@ -33,8 +38,9 @@ set expandtab
 set list listchars=tab:▸\ ,eol:¬,trail:•
 
 " Searching
+" highlight clear Search
+" set incsearch                   " Makes search act like search in modern browsers
 set hlsearch                    " Highlight search results
-set incsearch                   " Makes search act like search in modern browsers
 set gdefault                    " automatically set "/g" at the end of :substution commands
 set ignorecase                  " Ignore case when searching
 set smartcase                   " When searching try to be smart about cases 
@@ -95,8 +101,8 @@ set modeline
 set modelines=10
 
 " set the number of undos
-" undolevels 4
-set ul=4
+" undolevels 99
+set ul=99
 
 " Directories for swp files
 set backupdir=$HOME/.vim/backup
