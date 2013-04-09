@@ -1,0 +1,49 @@
+# ctrl-a shift-r  to reload
+bind R eval "source $HOME/.screenrc" "echo '.screenrc reloaded!'"
+
+deflogin on
+
+vbell on
+vbell_msg "   ----Doh!----   "
+
+# term xterm
+# term screen-256color
+#
+# terminfo and termcap for nice 256 color terminal
+# allow bold colors - necessary for some reason
+attrcolor b ".I"
+
+# tell screen how to set colors. AB = background, AF=foreground
+termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+
+# erase background with current bg color
+defbce "on"
+# set TERM
+term screen-256color-bce
+
+
+# # tell screen how to set colors. AB = background, AF=foreground
+# termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[
+# # erase background with current bg color
+# defbce "on]
+# # set TERM
+# term screen-256color-bce]
+
+autodetach on
+
+startup_message on
+
+pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
+
+# adding - before arg means it will be started as a login shell
+shell -$SHELL
+
+defscrollback 7000
+
+screen -t A
+screen -t B
+screen -t C
+screen -t D
+screen -t E
+
+
