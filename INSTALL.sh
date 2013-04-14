@@ -2,22 +2,24 @@
 
 
 # bash stuff
-( cd bash && for f in bashrc*; do cp $f  ~/.$f; done )
+( cd bash && for f in bash*; do echo "$f -> $HOME/.$f"; cp --backup=t $f  ~/.$f; done )
 
 
 #  ssh stuff
-if [ `which gpg` ];
-  -x ~/.ssh || { mkdir -m 0700 ~/.ssh}
-  gpg ssh/id.asc
-  tar xf id
-else
-  echo " FAIL - ~/.ssh stuff needs gpg to install SSH from this repo"
+if [ `which gpg` ]; then
+  [ -x ~/.ssh ] || ( mkdir -m 0700 ~/.ssh);
+  gpg ssh/id.asc;
+  tar -xf id;
+  cp --backup=t id_rsa* ~/.ssh
+  rm id_rsa* ssh/id
 fi
 
 
 
 
 # vim stuff
+
+cp --backup=t git/gitconfig ~/.gitconfig
 
 
 mkdir -p ~/.vim/{bundle,bundle-manual,backup}

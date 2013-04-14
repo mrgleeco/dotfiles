@@ -7,6 +7,8 @@ use warnings;
 
 my %Repo = ();
 
+# TODO - get rid of all the github stuff?  download the files proper? 
+# TODO - colors is going in to subdir 
 $Repo{colors} =  [
 	"git://github.com/nanotech/jellybeans.vim.git",
 	"git://github.com/Lokaltog/vim-distinguished.git",

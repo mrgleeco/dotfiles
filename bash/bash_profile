@@ -36,6 +36,7 @@ case "$TERM" in
     xterm-color) color_prompt=yes;;
 esac
 
+function setenv() { export "$1=$2"; }
 
 #
 # SSH: reconnect to our agent
@@ -43,25 +44,26 @@ esac
 
 {
     F=$HOME/.ssh/curr_agent.sh
-    if [ -f $F ]; then
+    if  [ -r $F ]; then
         is=`grep PID $F | perl -ane 'print (m@PID=(\d+)@ and kill(0,$1) ) ? $1 : 0' `
-        if [ $is == 0 ]; then
-            ssh-agent > $F
-            echo "new agent; ssh-add to initialize"
-        else
+        if [ $is >  0 ]; then
             echo "reusing current agent at pid.$is"
+        else
+            ssh-agent > $F
+            echo "stale agent, renewing; ssh-add to initialize"
          fi
-        source $F
+        source $F;
     else
-        ssh-agent  >  $F
-        source $F
+        ssh-agent -c  >  $F;
+        echo "new agent; ssh-add to initialize"
+        source $F;
     fi
 }
 
 
 
-test -x $HOME/.bash_alias     && source $HOME/.bash_alias
-test -x $HOME/.bash_alias_ssh && source $HOME/.bash_alias_ssh 
+test -r $HOME/.bash_alias     && source $HOME/.bash_alias
+test -r $HOME/.bash_alias_ssh && source $HOME/.bash_alias_ssh 
 test -x $HOME/local/bashrc    && for i in $HOME/local/bashrc/enabled/*.sh; do source $i; done
 
 
