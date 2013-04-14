@@ -1,0 +1,12 @@
+#
+# packages; most already on full distro, but Linode, and headless VMs less so
+# 
+dlocate
+redis-server
+nodejs
+memcached
+postgresql
+postgresql-client
+ntop
+# mercurial
+# mercurial-client
