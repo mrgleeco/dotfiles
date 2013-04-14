@@ -20,6 +20,7 @@ fi
 # vim stuff
 
 cp --backup=t git/gitconfig ~/.gitconfig
+cp --backup=t screen/screenrc ~/.screenrc
 
 
 mkdir -p ~/.vim/{bundle,bundle-manual,backup}
