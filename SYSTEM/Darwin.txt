@@ -1,0 +1,20 @@
+# 
+#  
+#
+charles_proxy | 
+chrome |
+firefox |
+git |
+goto_meeting |
+jing |
+opera |  
+picasa | 
+ruby | 
+silverlight |
+skype |
+source_code_pro_fonts | 
+sublime |
+text_mate |
+tunnelblick | 
+vbox | 
+vbox_extension_pack | 
