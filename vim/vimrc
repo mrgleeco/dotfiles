@@ -18,7 +18,7 @@ set encoding=utf-8
 
 
 " set background=dark
-colorscheme jellybeans    " too dark for me -g
+" colorscheme jellybeans    " too dark for me -g
 
 " highlight Visual term=reverse gui=reverse
 

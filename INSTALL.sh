@@ -2,16 +2,24 @@
 
 
 # bash stuff
-( cd bash && for f in bash*; do echo "$f -> $HOME/.$f"; cp --backup=t $f  ~/.$f; done )
+backup='';
+case $SYS in
+    Darwin)
+        # on a new MBA install, vim doesnt work w/o this setup
+        sudo sudo mkdir -p /usr/include/python2.7
+        sudo ln -s /System/Library/Frameworks/Python.framework/Versions/Current/include/python2.7/pyconfig.h /usr/include/python2.7/pyconfig.h
+        ;;
+    Linux)
+	    backup='--backup=t'; 
+	;;
+esac;
 
+( cd bash && for f in bash*; do echo "$f -> $HOME/.$f"; cp ${backup} $f  ~/.$f; done )
 
 #  ssh stuff
 if [ `which gpg` ]; then
   [ -x ~/.ssh ] || ( mkdir -m 0700 ~/.ssh);
-  gpg ssh/id.asc;
-  tar -xf id;
-  cp --backup=t id_rsa* ~/.ssh
-  rm id_rsa* ssh/id
+  ( cd ssh  && gpg id.asc && tar -xf id && cp ${backup} id_rsa* ~/.ssh/ && rm id_rsa* id )
 fi
 
 
@@ -19,8 +27,8 @@ fi
 
 # vim stuff
 
-cp --backup=t git/gitconfig ~/.gitconfig
-cp --backup=t screen/screenrc ~/.screenrc
+cp ${backup} git/gitconfig ~/.gitconfig
+cp ${backup} screen/screenrc ~/.screenrc
 
 
 mkdir -p ~/.vim/{bundle,bundle-manual,backup}
