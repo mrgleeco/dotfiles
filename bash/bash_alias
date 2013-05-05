@@ -35,6 +35,7 @@ export DATE=$(date -u +%Y%m%d)
 case  $SYS in
   Darwin)
 
+    alias tabti='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
     alias git='/usr/local/git/bin/git'
     ;;
 

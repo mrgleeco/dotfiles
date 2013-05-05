@@ -1,12 +1,16 @@
 # 
-#  
+# Hacks
+#   * for making vim work
+#    sudo sudo mkdir -p /usr/include/python2.7
+#    sudo ln -s /System/Library/Frameworks/Python.framework/Versions/Current/include/python2.7/pyconfig.h /usr/include/python2.7/pyconfig.h
 #
-iterm2 | 
+# Packages, in relative order of setup
+git |
 gpg | 
+iterm2 | 
 charles_proxy | 
 chrome |
 firefox |
-git |
 goto_meeting |
 jing |
 opera |  
@@ -20,3 +24,9 @@ text_mate |
 tunnelblick | 
 vbox | 
 vbox_extension_pack | 
+macfuse | 
+macfuse-core | 
+macfuse-prefPane | 
+ntfs-3g |  for extern HD for windoze
+amazon mp3 downloader |
+dropbox | 
