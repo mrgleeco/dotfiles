@@ -23,20 +23,18 @@ if [ `which gpg` ]; then
 fi
 
 
+cp ${backup} git/gitconfig   ~/.gitconfig
+cp ${backup} screen/screenrc ~/.screenrc
+cp ${backup} tmux/tmux.conf  ~/.tmux.conf
 
 
 # vim stuff
-
-cp ${backup} git/gitconfig ~/.gitconfig
-cp ${backup} screen/screenrc ~/.screenrc
-
-
 mkdir -p ~/.vim/{bundle,bundle-manual,backup}
 cp -r vim/autoload ~/.vim/
 
 cp vim/submodule_init.pl ~/.vim
 ( cd ~/.vim && perl submodule_init.pl )
-( cd vim && for f in vimrc*; do cp $f  ~/.$f; done )
+( cd vim && for f in vimrc*; do cp ${backup} $f  ~/.$f; done )
 
 
 
