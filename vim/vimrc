@@ -7,7 +7,7 @@ endif
 
 
 " to see all scripts loaded,  :scriptnames
-source $HOME/code/dotfiles/vim/bundles.vim
+source $HOME/.vim/bundles.vim
 
 syntax on
 set vb                          " visual bell

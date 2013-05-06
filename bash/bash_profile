@@ -2,8 +2,6 @@
 
 export SYS=`uname -s`;
 #
-
-
 #  load_common;
 
 # export PS1='\[\e[0;31m\]$(dirs_depth)\[\e[0;32m\]\u$(extra_color)@\[\e[0;32m\]\h\[\e[0m\]\[\e[0;33m\]$(parse_git_branch)\[\e[0m\]:\w\$ '']]]]]]'
@@ -27,6 +25,18 @@ case $SYS in
       ;;
 esac;
 
+
+
+# to use an opt-depot setup: 
+# export BASE=/ape
+if [ $BASE ]; then 
+    export DEPOT=$BASE/depot
+    export PATH=$BASE/bin:/bin:/usr/bin:/usr/local/bin:$BASE/sbin:/usr/sbin:/sbin
+    export MANPATH=$BASE/man:/usr/share/man:/usr/local/man
+    export LD_LIBRARY_PATH=$BASE/lib:/lib:/usr/lib:/usr/local/lib
+    export LD_RUN_PATH=$BASE/lib:/lib:/usr/lib:/usr/local/lib
+    export PERLLIB=$BASE/lib
+fi
 
 
 #

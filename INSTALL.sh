@@ -34,6 +34,7 @@ cp ${backup} tmux/tmux.conf  ~/.tmux.conf
 # vim stuff
 mkdir -p ~/.vim/{bundle,bundle-manual,backup}
 cp -r vim/autoload ~/.vim/
+cp ${backup} vim/bundles.vim ~/.vim/
 
 cp vim/submodule_init.pl ~/.vim
 ( cd ~/.vim && perl submodule_init.pl )
