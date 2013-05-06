@@ -27,6 +27,9 @@ cp ${backup} git/gitconfig   ~/.gitconfig
 cp ${backup} screen/screenrc ~/.screenrc
 cp ${backup} tmux/tmux.conf  ~/.tmux.conf
 
+[ -d ~/.cpan/CPAN ] || (mkdir -p ~/.cpan/CPAN )
+[ -f ~/.cpan/CPAN/MyConfig.pm ] || (cp cpan/MyConfig.pm ~/.cpan/CPAN/ ) 
+
 
 # vim stuff
 mkdir -p ~/.vim/{bundle,bundle-manual,backup}
