@@ -1,23 +1,62 @@
 [user]
     name = Greg Lee Coleman
     email = gleeco@cloudflare.com
+
+
+[core]
+    editor = vim
+    pager = less -+$LESS -FRX
+        # excludesfile = /Users/north/.gitignore
+        # whitespace=fix,tab-in-indent,trailing-space,cr-at-eol
+        # autocrlf = input
+        # safecrlf = warn
+
+[merge]
+        # tool = opendiff
+    tool = vimdiff
+
+
+[color]
+   branch = auto
+   diff = auto
+   interactive = auto
+   status = auto
+
+# testing this out; from http://northisup.com/blog/git-config-that-doesnt-suck-2/
+[color "branch"]
+        current = yellow reverse
+        local = yellow
+        remote = green
+
+[color "diff"]
+        meta = yellow bold
+        frag = magenta bold
+        old = red bold
+        new = green bold
+        whitespace = red reverse
+
+[color "status"]
+        added = yellow
+        changed = green
+        untracked = cyan
+
+
+
 [alias]
+
     st = status
     ci = commit
     br = branch
     co = checkout
-    hist = log --name-status
-    stati = status --untracked-files=no
-    gpr='git pull --rebase; [ -d ".git" ] && git submodule update --init --recursive'
-    create-pull-request = !sh -c 'stash pull-request $0'
-    pullreq = !sh -c 'stash pull-request $0'
-[color]
-    branch = auto
-    diff = auto
-    interactive = auto
-    status = auto
-[core]
-    editor = vim
-    pager = less -+$LESS -FRX
-[merge]
-    tool = vimdiff
+    hist=log --name-status
+    stati=status --untracked-files=no
+
+    # export?  after the JSON null-delim comes the stat which should be reparsed in to the json
+    # log-json =log --stat --pretty=format:'^^{ \"sha\":\"%h\", \"commit\": \"%H\", \"author\": \"%an <%ae>\", \"commiter\": \"%cN <%cE>\", \"date\": \"%ad\",\"message\": \"%s\",\"timestamp\":%at, \"file_stat\" : \"\" }%x00%n'
+
+# http://northisup.com/blog/git-config-that-doesnt-suck-2/
+#       log = log --graph
+        logp = log -p --graph
+        logs = log --stat --graph
+        what = whatchanged
+        mom = merge origin/master
