@@ -183,7 +183,7 @@ nnoremap <MiddleMouse> i<MiddleMouse>
 vnoremap <MiddleMouse> s<MiddleMouse>
 set pastetoggle=<F7> mouse=rnv
 
-"set ttymouse=xterm2
+set ttymouse=xterm2
 set mouse=a
 set t_Co=256 "tell the term has 256 colors
 
