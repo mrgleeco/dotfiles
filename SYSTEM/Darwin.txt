@@ -3,6 +3,9 @@
 #   * for making vim work
 #    sudo sudo mkdir -p /usr/include/python2.7
 #    sudo ln -s /System/Library/Frameworks/Python.framework/Versions/Current/include/python2.7/pyconfig.h /usr/include/python2.7/pyconfig.h
+#   * for making system more secure:
+#       enable filevault, save key as text file w/ PGP
+#       sudo pmset -a destroyfvkeyonstandby 1 hibernatemode 25
 #
 # Packages, in relative order of setup
 git |
