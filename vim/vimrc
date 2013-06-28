@@ -35,16 +35,18 @@ set shiftwidth=4 " Shift operations should use the same amount.
 set softtabstop=4 " Use a mixture of spaces and <Tab>s to complete editing operations
 set list listchars=tab:▸\ ,eol:¬,trail:•
 
-" allow toggling 
-function TabToggle()
-  if &expandtab
-    set noexpandtab
-  else
-    set expandtab
-  endif
-endfunction
+" allow toggling; test function exists b/c auto reload of this file is ON
+if !exists("*TabToggle")
+    function TabToggle()
+        if &expandtab
+            set noexpandtab
+        else
+            set expandtab
+        endif
+        endfunction
+endif
 nmap <F9> mz:execute TabToggle()<CR>'z
-
+" TIP: to switch a block from tabs/spaces use :retab
 
 
 " Searching
@@ -198,3 +200,8 @@ set mouse=a
 set t_Co=256 "tell the term has 256 colors
 
 
+" this is an inotify-like reloader for .vimrc
+augroup myvimrc
+    au!
+    au BufWritePost .vimrc, so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
+augroup END
