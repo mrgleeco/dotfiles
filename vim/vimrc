@@ -117,8 +117,9 @@ set modelines=10
 set ul=99
 
 " Directories for swp files
-set backupdir=$HOME/.vim/backup
-set directory=$HOME/.vim/backup
+" set backupdir=$HOME/.vim/backup
+" set directory=$HOME/.vim/backup
+
 if version >= 703
   set undofile
   set undodir=$HOME/.vim/undo
