@@ -55,7 +55,7 @@ function setenv() { export "$1=$2"; }
 {
     F=$HOME/.ssh/curr_agent.sh
     if  [ -r $F ]; then
-        is=`grep PID $F | perl -ane 'print (m@PID=(\d+)@ and kill(0,int $1) ) ? $1 : 0' `
+        is=`grep PID $F | perl -ane 'print m@PID=(\d+)@ && kill(0,int $1)  ? $1 : 0' `
         if [ $is -gt  0 ]; then
             echo "reusing current agent at pid.$is"
         else
