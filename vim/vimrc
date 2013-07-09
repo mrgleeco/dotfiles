@@ -5,8 +5,14 @@ if match($TERM, "screen")!=-1
   set term=xterm
 endif
 
+set ttymouse=xterm2
+set mouse=a
+set t_Co=256 "tell the term has 256 colors
+
 
 " to see all scripts loaded,  :scriptnames
+" to cleanup: 
+" :BundleClean  :BundleUpdate
 source $HOME/.vim/bundles.vim
 
 syntax on
@@ -22,6 +28,7 @@ colorscheme jellybeans    " too dark for me -g
 
 " highlight Visual term=reverse gui=reverse
 
+let g:airline_powerline_fonts=1
 
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
@@ -35,18 +42,30 @@ set shiftwidth=4 " Shift operations should use the same amount.
 set softtabstop=4 " Use a mixture of spaces and <Tab>s to complete editing operations
 set list listchars=tab:▸\ ,eol:¬,trail:•
 
+
 " allow toggling; test function exists b/c auto reload of this file is ON
+" default at startup is tabs off (spaces)
+set expandtab
 if !exists("*TabToggle")
     function TabToggle()
         if &expandtab
             set noexpandtab
+            echo 'tabs ON'
         else
             set expandtab
+            echo 'tabs OFF'
         endif
         endfunction
 endif
 nmap <F9> mz:execute TabToggle()<CR>'z
-" TIP: to switch a block from tabs/spaces use :retab
+" TODO - function for :retab in visual mode
+
+" Spelling options -- this highlights waaay too much
+set spelllang=en_us
+nn <F5> :setlocal spell! spell?<CR>
+
+" shill to test functions
+map <F2> :echo 'Current time is ' . strftime('%c')<CR>)
 
 
 " Searching
@@ -62,9 +81,6 @@ vnoremap / /\v
 " Auto formatting
 set autoindent " automatically indent text
 set formatoptions+=n1 " add formatting numbered list to autoformat
-
-" Spelling options -- this highlights waaay too much
-" set spell spelllang=en_us
 
 " Moving around windows
 nnoremap <C-h> <C-w>h
@@ -195,11 +211,6 @@ vmap <F7> <Esc>:set paste!<CR>gv
 nnoremap <MiddleMouse> i<MiddleMouse>
 vnoremap <MiddleMouse> s<MiddleMouse>
 set pastetoggle=<F7> mouse=rnv
-
-set ttymouse=xterm2
-set mouse=a
-set t_Co=256 "tell the term has 256 colors
-
 
 " this is an inotify-like reloader for .vimrc
 augroup myvimrc

@@ -18,10 +18,9 @@ $Repo{colors} =  [
 # keep list of vim repos we care to use
 $Repo{bundle} =  [
 	"git://github.com/Raimondi/delimitMate.git",
-	"git://github.com/Lokaltog/vim-powerline.git",
+    "git://github.com/bling/vim-airline.git",
 	"git://github.com/Shougo/neocomplcache.git",
 	"git://github.com/acustodioo/vim-tmux.git",
-	"git://github.com/brookhong/DBGPavim.git",
 	"git://github.com/duff/vim-scratch.git",
 	"git://github.com/gmarik/vundle.git",
 	"git://github.com/jakar/vim-json.git",
@@ -63,6 +62,7 @@ for my $type ( keys %Repo ) {
 ###############
 =cut
 my $vim_org_scripts = [
+  ["listmaps",      "672",  "plugin"],
   ["IndexedSearch", "7062",  "plugin"],
   ["jquery",        "12107", "syntax"],
 ];
