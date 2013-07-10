@@ -2,6 +2,8 @@
 
 export SYS=`uname -s`;
 #
+
+
 #  load_common;
 
 # export PS1='\[\e[0;31m\]$(dirs_depth)\[\e[0;32m\]\u$(extra_color)@\[\e[0;32m\]\h\[\e[0m\]\[\e[0;33m\]$(parse_git_branch)\[\e[0m\]:\w\$ '']]]]]]'
@@ -17,26 +19,14 @@ export HISTFILEIZE=5000
   #
 case $SYS in
     Darwin)
-        export PATH=/bin:/usr/bin:/usr/local/bin:/usr/sbin:/sbin:/usr/local/git/bin:/Developer/usr/bin
+        export PATH=/bin:/usr/bin:/usr/local/bin:/usr/sbin:/sbin:/usr/local/git/bin:/Developer/usr/bin:/opt/bin:/opt/usr/local/bin:~/bin
         ;;
     Linux)
-        export PATH=/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin
+        export PATH=/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin:~/bin
         export GOROOT=$HOME/local/go
       ;;
 esac;
 
-
-
-# to use an opt-depot setup: 
-# export BASE=/ape
-if [ $BASE ]; then 
-    export DEPOT=$BASE/depot
-    export PATH=$BASE/bin:/bin:/usr/bin:/usr/local/bin:$BASE/sbin:/usr/sbin:/sbin
-    export MANPATH=$BASE/man:/usr/share/man:/usr/local/man
-    export LD_LIBRARY_PATH=$BASE/lib:/lib:/usr/lib:/usr/local/lib
-    export LD_RUN_PATH=$BASE/lib:/lib:/usr/lib:/usr/local/lib
-    export PERLLIB=$BASE/lib
-fi
 
 
 #
@@ -56,7 +46,7 @@ function setenv() { export "$1=$2"; }
     F=$HOME/.ssh/curr_agent.sh
     if  [ -r $F ]; then
         is=`grep PID $F | perl -ane 'print m@PID=(\d+)@ && kill(0,int $1)  ? $1 : 0' `
-        if [ $is -gt  0 ]; then
+        if [ $is -gt  1 ]; then
             echo "reusing current agent at pid.$is"
         else
             ssh-agent > $F
