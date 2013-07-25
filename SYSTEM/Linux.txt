@@ -1,0 +1,5 @@
+# using this base image: 
+# https://solutionexchange.vmware.com/store/products/12-04-lts-jeos-ubuntu
+
+apt-get update
+apt-get install aptitude git-core realpath openssh-client openssh-server
