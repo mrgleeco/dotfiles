@@ -33,10 +33,13 @@ alias gdno='git diff --name-only | egrep "(.php|.html)$"'
 alias phplint='gdno | xargs -i php -l {} 2> /dev/null'
 alias colo='[ -f ~/.colo ] && cat ~/.colo'
 
+alias gopwd='export GOPATH=${PWD}'
+
 [ -d ~/local ] && alias D='cd ~/local/\${1}'
 
 # not quite an alias...
 export DATE=$(date -u +%Y%m%d)
+
 
 # OSX -- 
 case  $SYS in
