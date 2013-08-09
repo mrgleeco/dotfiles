@@ -1,5 +1,21 @@
 # using this base image: 
 # https://solutionexchange.vmware.com/store/products/12-04-lts-jeos-ubuntu
+choose bridged networking; autodetect
+196.168.2.129
 
+passwd [change root passwd]
 apt-get update
-apt-get install aptitude git-core realpath openssh-client openssh-server
+apt-get install aptitude git-core realpath openssh-client openssh-server xterm
+
+groupadd webusers
+useradd -G webusers -m -p cf -u 1001 -s /bin/bash cf
+su - cf 
+[as user cf] 
+   mkdir ~/{code,local}
+   git clone https://github.com/mrgleeco/dotfiles.git code/dotfiles
+   (cd ~/code/dotfiles && ./INSTALL )
+   git clone ssh://git@stash.cloudflare.com:7999/CF/cf-setup.git local/cf-setup
+   (cd ~/local/cf-setup && ./auto/install_all.sh
+
+
+
