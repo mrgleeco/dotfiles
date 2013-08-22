@@ -25,10 +25,20 @@ case $SYS in
         ;;
     Linux)
         export PATH=/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin:~/bin
-        export GOROOT=$HOME/local/go
+        [ -d $HOME/local/go ] && export GOROOT=$HOME/local/go
       ;;
 esac;
 
+# to use an opt-depot setup:
+# export BASE=/ape
+if [ $BASE ]; then
+     export DEPOT=$BASE/depot
+     export PATH=$BASE/bin:/bin:/usr/bin:/usr/local/bin:$BASE/sbin:/usr/sbin:/sbin
+     export MANPATH=$BASE/man:/usr/share/man:/usr/local/man
+     export LD_LIBRARY_PATH=$BASE/lib:/lib:/usr/lib:/usr/local/lib
+     export LD_RUN_PATH=$BASE/lib:/lib:/usr/lib:/usr/local/lib
+     export PERLLIB=$BASE/lib
+fi
 
 
 #

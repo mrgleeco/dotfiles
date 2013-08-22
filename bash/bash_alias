@@ -35,14 +35,20 @@ alias colo='[ -f ~/.colo ] && cat ~/.colo'
 
 alias gopwd='export GOPATH=${PWD}'
 
-[ -d ~/local ] && alias D='cd ~/local/\${1}'
+if [ -d ~/local/cf-repos ]; then 
+    echo "setting alias D=~/local/cf-repos"
+    alias D='cd ~/local/cf-repos && cd ${1}'
+elif [ -d ~/local/cf-www ]; then
+    echo "setting alias D=~/local"
+    alias D='cd ~/local && cd ${1}'
+fi
 
 # not quite an alias...
 export DATE=$(date -u +%Y%m%d)
 
-
-# OSX -- 
+# OS specific aliases
 case  $SYS in
+  # OSX -- 
   Darwin)
 
     alias tabti='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
