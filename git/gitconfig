@@ -50,9 +50,12 @@
     co = checkout
     hist=log --name-status
     stati=status --untracked-files=no
-
+    cron=log --branches --remotes --tags --graph --oneline --decorate
+    story=log --branches --remotes --tags --graph  --decorate --name-status
     # export?  after the JSON null-delim comes the stat which should be reparsed in to the json
-    # log-json =log --stat --pretty=format:'^^{ \"sha\":\"%h\", \"commit\": \"%H\", \"author\": \"%an <%ae>\", \"commiter\": \"%cN <%cE>\", \"date\": \"%ad\",\"message\": \"%s\",\"timestamp\":%at, \"file_stat\" : \"\" }%x00%n'
+    #json =log --stat --pretty=format:'^^{ \"sha\":\"%h\", \"commit\": \"%H\", \"author\": \"%an <%ae>\", \"commiter\": \"%cN <%cE>\", \"date\": \"%ad\",\"message\": \"%s\",\"timestamp\":%at, \"file_stat\" : \"\" }%x00%n'
+    # TODO - branches, files, full diff?!
+    json =log --pretty=format:'{ \"sha\":\"%h\", \"commit\": \"%H\", \"author\": \"%an <%ae>\", \"commiter\": \"%cN <%cE>\", \"date\": \"%ad\",\"message\": \"%s\",\"timestamp\":%at, \"file_stat\" : \"\" }%x00%n'
 
 # http://northisup.com/blog/git-config-that-doesnt-suck-2/
 #       log = log --graph
