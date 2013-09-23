@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 
+mode=$1
 
+# TODO - allow arg 
+#   dotfiles
+#   ssh
+#   vim
+# OR
+#
+# TODO - .vim/colors/jellybeans.vim is repo dir, not file --needs to be copied out and replace that name
 # bash stuff
 backup='';
 case $SYS in

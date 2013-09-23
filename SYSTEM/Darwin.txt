@@ -8,31 +8,31 @@
 #       sudo pmset -a destroyfvkeyonstandby 1 hibernatemode 25
 #
 # Packages, in relative order of setup
-git |
-gpg | 
-iterm2 | 
-charles_proxy | 
-chrome |
-firefox |
-goto_meeting |
-jing |
-opera |  
-picasa | 
-ruby | 
-silverlight |
-skype |
-source_code_pro_fonts | 
-sublime |
-text_mate |
-tunnelblick | 
-vbox | 
-vbox_extension_pack | 
-macfuse | 
-macfuse-core | 
-macfuse-prefPane | 
-ntfs-3g |  for extern HD for windoze
-amazon mp3 downloader |
-dropbox | 
+git
+gpg
+iterm2
+charles_proxy 
+chrome
+firefox
+goto_meeting
+jing
+opera
+picasa
+ruby
+silverlight
+skype
+source_code_pro_fonts
+sublime
+text_mate
+tunnelblick
+vbox
+vbox_extension_pack
+macfuse
+macfuse-core
+macfuse-prefPane
+ntfs-3g                     #  for extern HD for windoze
+amazon mp3 downloader
+dropbox
 homebrew | ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
 gcc binaries | 
      > sudo mkdir -m 1777 /opt
@@ -41,8 +41,6 @@ gcc binaries |
      > wget "http://prdownloads.sourceforge.net/hpc/gcc-mlion.tar.gz?download"
      > tar zxvf gcc-mlion.tar.gz
      # at this point, need to add /opt/bin and /opt/usr/local/bin to path
-mac osx command line tools | http://connect.apple.com
+mac osx command line tools  # at http://connect.apple.com
 perlbrew | > curl -L http://install.perlbrew.pl | bash
-mou | http://mouapp.com/  is a markdown editor
-pdftohtml | brew install pdftohtml
-
+brew install the_silver_searcher    # provide ack like  searching via installed cmd /usr/local/bin/Ag

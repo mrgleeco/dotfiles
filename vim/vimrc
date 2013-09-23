@@ -1,5 +1,6 @@
 "
 " if editing this file, reload with  :so %
+
 "
 if match($TERM, "screen")!=-1
   set term=xterm
@@ -10,21 +11,29 @@ set mouse=a
 set t_Co=256 "tell the term has 256 colors
 
 
+" to see all mappings :map
 " to see all scripts loaded,  :scriptnames
 " to cleanup: 
 " :BundleClean  :BundleUpdate
 source $HOME/.vim/bundles.vim
 
 syntax on
+"syntax enable
 set vb                          " visual bell
 set number
 set ruler
 set wrap                        " set nowrap
 set encoding=utf-8
+set scrolloff=3                 " show context above and below the line
+set wildmenu                    " show menu for tab completion
+
+set clipboard=unnamed           " yank + paste w/ system clipboard"
 
 
-" set background=dark
-colorscheme jellybeans    " too dark for me -g
+set background=dark
+colorscheme solarized
+let g:solarized_termcolors=256
+" colorscheme jellybeans
 
 " highlight Visual term=reverse gui=reverse
 
@@ -66,7 +75,6 @@ nn <F5> :setlocal spell! spell?<CR>
 
 " shill to test functions
 map <F2> :echo 'Current time is ' . strftime('%c')<CR>)
-
 
 " Searching
 " highlight clear Search
@@ -169,6 +177,22 @@ call pathogen#infect()
 " nerdtree with ctrl-n
 map <C-n> :NERDTreeToggle<CR>
 map :nt :NERDTreeToggle<CR>
+
+" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+" usage:   :Ag foo          -- searches cwd by default
+" usage:   :Ag foo ~/htdocs -- search somewhere else
+" works in visual mode too
+if executable('ag')
+  let g:ackprg = 'ag --nogroup --column'
+
+  " Use Ag over Grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
+
+
 
 " prevent accidental :Q going in to EX mode
 map Q :q

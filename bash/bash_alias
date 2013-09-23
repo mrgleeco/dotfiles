@@ -3,7 +3,14 @@ fast_find() {
     find . -name ${1} |  grep -v "/.git/"  | xargs ls -dF | less -FX  
 }
 
+cert_check() {
+    echo '' | openssl s_client -connect ${1}:443 2>/dev/null | openssl x509  -noout -text
+}
+
 alias ff=fast_find;
+alias x509=cert_check
+
+
 
 # alias urldec="perl -ane 'for(1..2) { s/%([\da-f]{2})/pack("c",hex($1))/ige; } print;' ";
 # alias urldec='perl -e \'s/%([\da-f]{2})/pack("c",hex($1))/ige for @ARGV;  map { print "\n$_\n" } @ARGV\' ';

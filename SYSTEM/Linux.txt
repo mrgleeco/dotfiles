@@ -1,21 +1,89 @@
-# using this base image: 
-# https://solutionexchange.vmware.com/store/products/12-04-lts-jeos-ubuntu
+
+VMware installation - host OS at least. 
+using  vmware fusion 5
+using ubuntu 12.04 server ISO
+
+
 choose bridged networking; autodetect
 196.168.2.129
 
-passwd [change root passwd]
-apt-get update
-apt-get install aptitude git-core realpath openssh-client openssh-server xterm
 
-groupadd webusers
+# <as root>
+addgroup cf adm
+grouadd webusers
 useradd -G webusers -m -p cf -u 1001 -s /bin/bash cf
-su - cf 
+
+sudo dpkg-reconfigure console-setup
+
+sudo aptitude update    # refresh apt's cache
+sudo aptitude upgrade   # run the upgrade
+apt-get  install \
+    openssh-server \
+    aptitude \
+    git-core \
+    realpath \
+    screen \
+    tmux \
+    xterm \
+    whois
+
+
+# additional user stuff
+apt-get  install \
+    silversearcher-ag
+
+# begin kernel upgrade for docker
+apt-get update && sudo apt-get install linux-image-generic-lts-raring
+# <reboot>
+
+shutdown -r now 
+
+# addendum: after upgrading kernel, need to reinstall vmware-tools 
+# step 1 is to get the new kernel headers
+sudo apt-get install linux-headers-$(uname -r)
+   tar zxvf VMwareTools-9.2.2-893683.tar.gz
+   cd vmware-tools-distrib/
+   ./vmware-install.pl
+
+
+
+##########################
+#### cf user setup   #####
+##########################
+# now git clone  cf-setup
 [as user cf] 
+
+mkdir ~/code && cd ~/code && git clone https://github.com/mrgleeco/dotfiles.git
+cd dotfiles && bash ./INSTALL.sh
+
    mkdir ~/{code,local}
    git clone https://github.com/mrgleeco/dotfiles.git code/dotfiles
    (cd ~/code/dotfiles && ./INSTALL )
-   git clone ssh://git@stash.cloudflare.com:7999/CF/cf-setup.git local/cf-setup
+   # cd ~/local && git clone cf-setup 
    (cd ~/local/cf-setup && ./auto/install_all.sh
 
+
+
+
+
+##########################
+#### Docker subystem #####
+##########################
+
+# Add the PPA sources to your apt sources list.
+sudo apt-get install python-software-properties && sudo add-apt-repository ppa:dotcloud/lxc-docker
+
+
+# Update your sources
+sudo apt-get update
+
+# Install, you will see another warning that the package cannot be authenticated. Confirm install.
+sudo apt-get install lxc-docker
+
+# Verify it worked:
+# download the base 'ubuntu' container and run bash inside it while setting up an interactive shell
+docker run -i -t ubuntu /bin/bash
+
+# type 'exit' to exit
 
 

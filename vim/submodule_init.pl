@@ -12,6 +12,7 @@ my %Repo = ();
 $Repo{colors} =  [
 	"git://github.com/nanotech/jellybeans.vim.git",
 	"git://github.com/Lokaltog/vim-distinguished.git",
+	"git://github.com/altercation/vim-colors-solarized.git"
 ];
 
 
@@ -50,10 +51,14 @@ for my $type ( keys %Repo ) {
 	my $repo = $Repo{$type};
 	for my $r(@$repo){
 		$r =~ m@.*/(.*?).git$@  or next;
-		-d "$type/$1"  and next;
-		my $cmd = qq{ git clone $r ./$type/$1 };
+		my $d = "./$type/$1-git";
+		-d $d and next;
+		my $cmd = qq{ git clone $r $d };
 		print "CMD>>  $cmd \n";
 		print qx{ $cmd };
+		if ($type eq 'colors'){
+			print qx{ find $d/colors -type f -name "*.vim" | xargs mv .  };
+		}
 	}
 }
 
