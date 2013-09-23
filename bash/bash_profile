@@ -41,6 +41,12 @@ if [ $BASE ]; then
      export PERLLIB=$BASE/lib
 fi
 
+#
+# conditional paths that may (not) exist
+#
+[ -d ~/local/bin ] && export PATH=$PATH:~/local/bin
+[ -d ~/bin ] && export PATH=$PATH:~/bin
+
 
 #
 # WINDOWING
