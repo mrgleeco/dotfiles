@@ -30,5 +30,6 @@ Bundle 'brookhong/DBGPavim'
 Bundle 'mattn/webapi-vim'
 Bundle 'duff/vim-scratch'
 Bundle 'scrooloose/nerdtree'
+Bundle 'airblade/vim-gitgutter'
 
 filetype plugin indent on
