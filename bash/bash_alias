@@ -59,7 +59,13 @@ case  $SYS in
   Darwin)
 
     alias tabti='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
-    alias git='/usr/local/git/bin/git'
+
+    hub=`which hub`;
+    if [ -f $hub ]; then 
+        alias git=$hub;
+    else
+        alias git='/usr/local/git/bin/git'
+    fi
     ;;
 
   Linux)
