@@ -31,5 +31,6 @@ Bundle 'mattn/webapi-vim'
 Bundle 'duff/vim-scratch'
 Bundle 'scrooloose/nerdtree'
 Bundle 'airblade/vim-gitgutter'
+Bundle 'maksimr/vim-jsbeautify'
 
 filetype plugin indent on

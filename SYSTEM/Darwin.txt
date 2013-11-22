@@ -46,5 +46,6 @@ mac osx command line tools | http://connect.apple.com
 perlbrew | > curl -L http://install.perlbrew.pl | bash
 brew install xz
 brew install imagemagick
+brew install hub    # see http://hub.github.com/
 # HTML for images
-https://github.com/blueimp/Gallery
+# https://github.com/blueimp/Gallery
