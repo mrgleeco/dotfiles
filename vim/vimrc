@@ -31,9 +31,9 @@ set clipboard=unnamed           " yank + paste w/ system clipboard"
 
 
 set background=dark
-colorscheme solarized
-let g:solarized_termcolors=256
-" colorscheme jellybeans
+"colorscheme solarized
+"let g:solarized_termcolors=256
+colorscheme jellybeans
 
 " highlight Visual term=reverse gui=reverse
 
