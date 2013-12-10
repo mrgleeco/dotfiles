@@ -42,22 +42,28 @@ $Repo{bundle} =  [
 	"git://github.com/tpope/vim-fugitive.git",
 	"git://github.com/vim-scripts/indenthtml.vim.git",
 	"git://github.com/vim-scripts/matchit.zip.git",
+	"git://github.com/jamessan/vim-gnupg.git",
 ];
 
 
 
 for my $type ( keys %Repo ) {
+
+	$type eq 'colors' or next;
 	-d "./$type" or print "creating dir ./$type\n",  qx{ mkdir -p ./$type };
 	my $repo = $Repo{$type};
 	for my $r(@$repo){
 		$r =~ m@.*/(.*?).git$@  or next;
-		my $d = "./$type/$1-git";
-		-d $d and next;
+		my $d = "./$type/$1";
+		( -d $d || -f $d) and next;
+		# my $cmd = qq{ git clone $r $d };
 		my $cmd = qq{ git clone $r $d };
 		print "CMD>>  $cmd \n";
 		print qx{ $cmd };
 		if ($type eq 'colors'){
-			print qx{ find $d/colors -type f -name "*.vim" | xargs mv .  };
+			my $sub_cmd = qq! mv $d $d~ && ( find $d~/colors -type f -name "*.vim" -exec mv! . q! {} ! . qq!$type/  \\; ) && rm -rf $d~ !;
+			print "CMD>>  $sub_cmd\n";
+			print qx{ $sub_cmd };
 		}
 	}
 }
