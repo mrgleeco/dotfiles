@@ -33,6 +33,7 @@ alias tsq=' sort | uniq -c | sort -rn'
 alias socatty='socat -u TCP4-LISTEN:3334,reuseaddr,fork OPEN:/tmp/log.socatty.$USER,creat,append'
 
 alias cf-sql="~/local/postgres/bin/psql dev_cf"
+alias cf-sql-prod="psql -U user_gleeco prod_cf"
 alias cfp-sql='/home/cf/local/postgres/bin/psql dev_cfp'
 alias cf-env="source ~/local/cf-setup/auto/default_env.sh"
 

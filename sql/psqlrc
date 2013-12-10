@@ -1,0 +1,33 @@
+
+-- vim: ft=sql
+
+-- Official docs: http://www.postgresql.org/docs/9.3/static/app-psql.html
+-- http://craigkerstiens.com/2013/02/13/How-I-Work-With-Postgres/
+-- https://github.com/hgmnz/dotfiles/blob/master/psqlrc
+
+
+-- \timing
+
+-- \pset pager on
+
+\set HISTCONTROL ignoredups
+
+\set HISTFILE ~/.psql_history- :HOST - :DBNAME
+
+\set HISTSIZE 5000
+
+\set COMP_KEYWORD_CASE upper
+
+\encoding unicode
+
+\pset linestyle unicode
+
+\set PROMPT1 '(%n@%M:%>) [%/] > '
+
+\pset null ¤
+
+\pset border 2
+
+-- todo: useful macros
+-- to run: :show_slow_queries
+\set show_slow_queries 'SELECT (total_time / 1000 / 60) as total_minutes, (total_time/calls) as average_time, funcname FROM pg_stat_user_functions ORDER BY 1 DESC LIMIT 20;'

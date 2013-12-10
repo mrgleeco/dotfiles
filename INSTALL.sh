@@ -34,6 +34,7 @@ fi
 cp ${backup} git/gitconfig   ~/.gitconfig
 cp ${backup} screen/screenrc ~/.screenrc
 cp ${backup} tmux/tmux.conf  ~/.tmux.conf
+cp ${backup} sql/psqlrc      ~/.psqlrc
 
 [ -d ~/.cpan/CPAN ] || (mkdir -p ~/.cpan/CPAN )
 [ -f ~/.cpan/CPAN/MyConfig.pm ] || (cp cpan/MyConfig.pm ~/.cpan/CPAN/ ) 
