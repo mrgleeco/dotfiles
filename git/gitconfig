@@ -59,6 +59,9 @@
     # TODO - branches, files, full diff?!
     json =log --pretty=format:'{ \"sha\":\"%h\", \"commit\": \"%H\", \"author\": \"%an <%ae>\", \"commiter\": \"%cN <%cE>\", \"date\": \"%ad\",\"message\": \"%s\",\"timestamp\":%at, \"file_stat\" : \"\" }%x00%n'
 
+    resetorigin = !git fetch origin && git reset --hard origin/master && git clean -f -d
+    resetupstream = !git fetch upstream && git reset --hard upstream/master && git clean -f -d
+
 # http://northisup.com/blog/git-config-that-doesnt-suck-2/
 #       log = log --graph
 
