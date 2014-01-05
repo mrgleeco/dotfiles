@@ -18,19 +18,20 @@ case $SYS in
         sudo ln -s /System/Library/Frameworks/Python.framework/Versions/Current/include/python2.7/pyconfig.h /usr/include/python2.7/pyconfig.h
         ;;
     Linux)
-	    backup='--backup=t'; 
-	;;
+        backup='--backup=t'; 
+    ;;
 esac;
 
 ( cd bash && for f in bash*; do echo "$f -> $HOME/.$f"; cp ${backup} $f  ~/.$f; done )
 
 #  ssh stuff
-if [ `which gpg` ]; then
-  [ -x ~/.ssh ] || ( mkdir -m 0700 ~/.ssh);
+[ -x ~/.ssh ] || ( mkdir -m 0700 ~/.ssh);
+if [ -r ssh/id.asc ] && [ `which gpg` ]; then
   ( cd ssh  && gpg id.asc && tar -xf id && cp ${backup} id_rsa* ~/.ssh/ && rm id_rsa* id )
 fi
 
 
+cp ${backup} ssh/config     ~/.ssh/
 cp ${backup} git/gitconfig   ~/.gitconfig
 cp ${backup} screen/screenrc ~/.screenrc
 cp ${backup} tmux/tmux.conf  ~/.tmux.conf
