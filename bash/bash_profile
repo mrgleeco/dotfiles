@@ -11,6 +11,7 @@ export PS1='[\u@\h:\w]$ '
 export EDITOR=/usr/bin/vim
 export PAGER=/usr/bin/less
 export ACK_PAGER=/usr/bin/less
+export ORG=jut
 
 
 export HISTSIZE=1000

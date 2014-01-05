@@ -7,8 +7,19 @@ cert_check() {
     echo '' | openssl s_client -connect ${1}:443 2>/dev/null | openssl x509  -noout -text
 }
 
+code_dir() {
+    if [ -d ~/code/$ORG/$1 ]; then
+        cd ~/code/jut/$1
+    elif [ -d ~/code/$1 ]; then
+        cd ~/code/$1
+    else
+        cd ~/code
+    fi;
+}
+
 alias ff=fast_find;
 alias x509=cert_check
+alias D=code_dir
 
 
 
@@ -42,14 +53,6 @@ alias phplint='gdno | xargs -i php -l {} 2> /dev/null'
 alias colo='[ -f ~/.colo ] && cat ~/.colo'
 
 alias gopwd='export GOPATH=${PWD}'
-
-if [ -d ~/local/cf-repos ]; then 
-    echo "setting alias D=~/local/cf-repos"
-    alias D='cd ~/local/cf-repos && cd ${1}'
-elif [ -d ~/local/cf-www ]; then
-    echo "setting alias D=~/local"
-    alias D='cd ~/local && cd ${1}'
-fi
 
 # not quite an alias...
 export DATE=$(date -u +%Y%m%d)
