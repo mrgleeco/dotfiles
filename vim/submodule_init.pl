@@ -49,7 +49,7 @@ $Repo{bundle} =  [
 
 for my $type ( keys %Repo ) {
 
-	$type eq 'colors' or next;
+	# $type eq 'colors' or next;
 	-d "./$type" or print "creating dir ./$type\n",  qx{ mkdir -p ./$type };
 	my $repo = $Repo{$type};
 	for my $r(@$repo){
