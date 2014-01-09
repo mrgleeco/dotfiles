@@ -49,3 +49,11 @@ brew install imagemagick
 brew install hub    # see http://hub.github.com/
 # HTML for images
 # https://github.com/blueimp/Gallery
+#
+# nginx devel
+brew install pcre luajit
+brew install lua luarocks
+# ningx / openresty devel here & now? 
+# curl -O http://openresty.org/download/ngx_openresty-1.4.3.3.tar.gz
+# ./configure --prefix=~/opt/depot/ngx_openresty-1.4.3.3 --with-pcre --with-luajit  --with-ld-opt="-L/usr/local/lib"
+# make && make install

@@ -23,6 +23,12 @@ gT            go to previous tab
 {i}gt         go to tab in position i
 
 
+Text width/paragraphs
+--------------------
+
+:set tw=60          - sets text width,
+gqip                - reformats longer text to text width
+
 Working with multiple windows  aka panes
 ------------------------------
 
