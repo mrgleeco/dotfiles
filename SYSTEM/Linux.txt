@@ -26,6 +26,9 @@ apt-get  install \
     tmux \
     xterm \
     whois \
+    curl \ 
+    lynx \ 
+
     traceroute 
 
 
@@ -47,26 +50,6 @@ sudo apt-get install linux-headers-$(uname -r)
    ./vmware-install.pl
 
 
-
-##########################
-#### cf user setup   #####
-##########################
-# now git clone  cf-setup
-[as user cf] 
-
-mkdir ~/code && cd ~/code && git clone https://github.com/mrgleeco/dotfiles.git
-cd dotfiles && bash ./INSTALL.sh
-
-   mkdir ~/{code,local}
-   git clone https://github.com/mrgleeco/dotfiles.git code/dotfiles
-   (cd ~/code/dotfiles && ./INSTALL )
-   # cd ~/local && git clone cf-setup 
-   (cd ~/local/cf-setup && ./auto/install_all.sh
-
-
-
-
-
 ##########################
 #### Docker subystem #####
 ##########################
@@ -86,5 +69,65 @@ sudo apt-get install lxc-docker
 docker run -i -t ubuntu /bin/bash
 
 # type 'exit' to exit
+
+
+## Fig subsystem
+
+ sudo apt-get install python-pip
+ sudo pip install -U fig
+
+ # test it out
+
+
+
+
+##########################
+#### cf dev setup   #####
+##########################
+# now git clone  cf-setup
+[as user cf] 
+
+mkdir ~/code && cd ~/code && git clone https://github.com/mrgleeco/dotfiles.git
+cd dotfiles && bash ./INSTALL.sh
+
+   mkdir ~/{code,local}
+   git clone https://github.com/mrgleeco/dotfiles.git code/dotfiles
+   (cd ~/code/dotfiles && ./INSTALL )
+   # cd ~/local && git clone cf-setup 
+   (cd ~/local/cf-setup && ./auto/install_all.sh
+
+
+#
+##########################
+#### JJ dev setup    #####
+##########################
+
+mkdir ~/opt/{depot,src}
+
+sudo apt-get install \
+    g++ \               # for node
+    default-jre \       # for elasticsearch
+    rake                # for hub
+    libreadline-dev libncurses5-dev libpcre3-dev libssl-dev perl make   \ # for nginx
+
+
+# dropbox deb pkg: NOTE NOTE: this segfaults as of 2014-01, so nice to have
+curl  -L -O https://www.dropbox.com/download?dl=packages/debian/dropbox_1.6.0_amd64.deb
+sudo dkpg -i dropbox_1.6.0_amd64.deb
+
+# for depot stuff (ie. working dir = ~/opt/src ):
+
+  git clone https://github.com/github/hub.git
+  rake install prefix=~/opt/depot/hub-1.11.1
+
+  curl https://npmjs.org/install.sh > install_npm.sh
+  npm_config_prefix=/home/jj/opt/depot/npm-1.1.71 sh install_npm.sh
+
+  curl http://nodejs.org/dist/v0.10.24/node-v0.10.24.tar.gz -O
+  ./configure --prefix=~/opt/depot/node-v0.10.24 2>&1 |tee d.conf
+  make && make install
+
+
+
 
 

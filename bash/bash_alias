@@ -39,6 +39,7 @@ alias P='perl -c'
 alias l='less -fK' # -f force binary files; -F  -K exit on ^c
 alias loc='locate'
 alias px='perceus'
+alias reprofile='source ~/.bash_profile'
 
 alias tsq=' sort | uniq -c | sort -rn'
 alias socatty='socat -u TCP4-LISTEN:3334,reuseaddr,fork OPEN:/tmp/log.socatty.$USER,creat,append'

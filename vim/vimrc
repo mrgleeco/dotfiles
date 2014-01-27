@@ -99,7 +99,7 @@ nnoremap <C-l> <C-w>l
 "Misc
 set ttyfast " using a fast terminal
 nnoremap ; :
-inoremap jj <ESC>
+" inoremap jj <ESC>
 
 
 " to use jsbeautify (works only on *.js files)
