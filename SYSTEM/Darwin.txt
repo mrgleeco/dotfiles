@@ -6,6 +6,17 @@
 #   * for making system more secure:
 #       enable filevault, save key as text file w/ PGP
 #       sudo pmset -a destroyfvkeyonstandby 1 hibernatemode 25
+#       revised for pita factor (less secure admittedly)
+#       sudo pmset -a destroyfvkeyonstandby 0 hibernatemode 3
+#
+#   For handling auto-start init type stuff, checko out launchctl and launchd 
+#   ex. homebrew installls elasticsearch and leaves it running forever.  Do this to disable:
+#   launchctl unload -w /usr/local/Cellar/elasticsearch/0.90.5/homebrew.mxcl.elasticsearch.plist
+#   to find all things:  
+#       locate plist |grep .plist$ 
+#   ...but most live in  
+#   /System/Library/LaunchDaemons/  
+#   /Library/LaunchDaemons/
 #
 # Packages, in relative order of setup
 git |
