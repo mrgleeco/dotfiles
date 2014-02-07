@@ -28,7 +28,10 @@ apt-get  install \
     whois \
     curl \ 
     lynx \ 
-
+    vim \ 
+    libanyevent-perl \ 
+    libanyevent-http-perl \
+    libjson-xs-perl \
     traceroute 
 
 
