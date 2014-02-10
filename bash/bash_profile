@@ -25,6 +25,8 @@ case $SYS in
         # make system perl aware of local perlbrew  setup
         [ -d ~/perl5/lib/perl5 ] && cpanm --local-lib=~/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
         [ -d /usr/local/go ] && export GOROOT=/usr/local/go
+        [ -f ~/perl5/perlbrew/etc/bashrc ] && source ~/perl5/perlbrew/etc/bashrc
+        [ -d /usr/local/node_modules ] && export NODE_PATH=/usr/local/node_modules
         ;;
     Linux)
         export PATH=/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin:~/bin
@@ -34,6 +36,8 @@ esac;
 
 # to use an opt-depot setup:
 # export BASE=/ape
+[ -d ~/opt/depot ] && export BASE=~/opt
+
 if [ $BASE ]; then
      export DEPOT=$BASE/depot
      export PATH=$BASE/bin:/bin:/usr/bin:/usr/local/bin:$BASE/sbin:/usr/sbin:/sbin
@@ -41,6 +45,7 @@ if [ $BASE ]; then
      export LD_LIBRARY_PATH=$BASE/lib:/lib:/usr/lib:/usr/local/lib
      export LD_RUN_PATH=$BASE/lib:/lib:/usr/lib:/usr/local/lib
      export PERLLIB=$BASE/lib
+     [ -d $BASE/lib/node_modules ] && export NODE_PATH=$NODE_PATH:/usr/local/node_modules
 fi
 
 #

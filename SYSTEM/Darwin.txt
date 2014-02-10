@@ -68,3 +68,14 @@ brew install lua luarocks
 # curl -O http://openresty.org/download/ngx_openresty-1.4.3.3.tar.gz
 # ./configure --prefix=~/opt/depot/ngx_openresty-1.4.3.3 --with-pcre --with-luajit  --with-ld-opt="-L/usr/local/lib"
 # make && make install
+#
+# redis devel
+brew install redis
+
+# NB: 
+#To have launchd start redis at login:
+#        ln -sfv /usr/local/opt/redis/*.plist ~/Library/LaunchAgents
+#   Then to load redis now:
+#       launchctl load ~/Library/LaunchAgents/homebrew.mxcl.redis.plist
+#   Or, if you don't want/need launchctl, you can just run:
+#       redis-server /usr/local/etc/redis.conf
