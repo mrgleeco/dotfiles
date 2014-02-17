@@ -26,11 +26,8 @@ Bundle 'acustodioo/vim-tmux'
 Bundle 'matchit.zip'
 Bundle 'jnwhiteh/vim-golang'
 Bundle 'nsf/gocode', {'rtp': 'vim/'}
-Bundle 'brookhong/DBGPavim'
 Bundle 'mattn/webapi-vim'
 Bundle 'duff/vim-scratch'
 Bundle 'scrooloose/nerdtree'
-Bundle 'airblade/vim-gitgutter'
-Bundle 'maksimr/vim-jsbeautify'
 
 filetype plugin indent on

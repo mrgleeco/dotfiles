@@ -200,6 +200,10 @@ map Q :q
 set tabpagemax=10
 
 
+" jsbeautify
+map :pretty :call JsBeautify()<CR>
+map <F3> :call JsBeautify()<CR>
+
 """""" PERL """"""""""
 
 " check perl code with :make
@@ -218,10 +222,10 @@ autocmd BufNewFile  *.pm        0r ~/.vim/skeleton.pm
 :let perl_extended_vars = 1
 
 :filetype plugin on
-let g:Perl_AuthorName      = 'Gregory Coleman'
+let g:Perl_AuthorName      = 'Greg Lee Coleman'
 let g:Perl_AuthorRef       = 'gleeco'
-let g:Perl_Email           = 'gleeco@cloudflare.com'
-let g:Perl_Company         = 'Cloudlare'
+let g:Perl_Email           = 'gleeco@gmail.com'
+let g:Perl_Company         = ''
 let g:Perl_BraceOnNewLine   = "yes"
 
 " fix so that mouse-button (middle) paste during insert just works
