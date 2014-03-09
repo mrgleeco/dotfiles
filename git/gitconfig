@@ -53,6 +53,7 @@
     cron=log --branches --remotes --tags --graph --oneline --decorate
     story=log --branches --remotes --tags --graph  --decorate --name-status
     tell=log --date=short --pretty='%Cgreen%h%Creset %ad %Cred<%an>%Creset  %s'
+    redate=rebase --ignore-date
 
     # export?  after the JSON null-delim comes the stat which should be reparsed in to the json
     #json =log --stat --pretty=format:'^^{ \"sha\":\"%h\", \"commit\": \"%H\", \"author\": \"%an <%ae>\", \"commiter\": \"%cN <%cE>\", \"date\": \"%ad\",\"message\": \"%s\",\"timestamp\":%at, \"file_stat\" : \"\" }%x00%n'

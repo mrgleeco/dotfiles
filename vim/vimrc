@@ -1,7 +1,8 @@
 "
 " if editing this file, reload with  :so %
+" to update bundles, do from cmd line:
+"   vim +BundleInstall +qall
 
-"
 if match($TERM, "screen")!=-1
   set term=xterm
 endif
