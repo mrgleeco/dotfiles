@@ -1,7 +1,6 @@
 [user]
     name = Greg Lee Coleman
-    email = gleeco+github@gmail.com
-
+    email = gleeco@jut.io
 
 [core]
     editor = vim
@@ -48,12 +47,18 @@
     ci = commit
     br = branch
     co = checkout
-    hist=log --name-status
+    hist=log --name-status --graph --decorate
     stati=status --untracked-files=no
     cron=log --branches --remotes --tags --graph --oneline --decorate
     story=log --branches --remotes --tags --graph  --decorate --name-status
     tell=log --date=short --pretty='%Cgreen%h%Creset %ad %Cred<%an>%Creset  %s'
     redate=rebase --ignore-date
+    branchdiff=diff --color origin/master..
+    branchdiffstat=diff --stat --color origin/master..
+
+    #show all files changed since branch inception
+    fshow = ! bash -c 'git show --pretty="format:"  --name-only "$(git merge-base "$(git rev-parse --abbrev-ref HEAD)" master)..HEAD" | grep -v "^$" | sort | uniq' -
+    # TODO: like logp
 
     # export?  after the JSON null-delim comes the stat which should be reparsed in to the json
     #json =log --stat --pretty=format:'^^{ \"sha\":\"%h\", \"commit\": \"%H\", \"author\": \"%an <%ae>\", \"commiter\": \"%cN <%cE>\", \"date\": \"%ad\",\"message\": \"%s\",\"timestamp\":%at, \"file_stat\" : \"\" }%x00%n'
@@ -70,3 +75,6 @@
         logs = log --stat --graph
         what = whatchanged
         mom = merge origin/master
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
