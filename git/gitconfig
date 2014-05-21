@@ -10,6 +10,9 @@
         # autocrlf = input
         # safecrlf = warn
 
+[push]
+    default = current
+
 [merge]
         # tool = opendiff
     tool = vimdiff
