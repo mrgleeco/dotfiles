@@ -43,6 +43,8 @@ $Repo{bundle} =  [
 	"git://github.com/vim-scripts/indenthtml.vim.git",
 	"git://github.com/vim-scripts/matchit.zip.git",
 	"git://github.com/jamessan/vim-gnupg.git",
+	"git://github.com/airblade/vim-gitgutter.git",
+	"git://github.com/maksimr/vim-jsbeautify.git",
 ];
 
 
