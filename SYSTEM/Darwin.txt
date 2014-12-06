@@ -58,6 +58,8 @@ perlbrew | > curl -L http://install.perlbrew.pl | bash
 brew install xz
 brew install imagemagick
 brew install hub    # see http://hub.github.com/
+
+# get cpanminus rolling - 
 # HTML for images
 # https://github.com/blueimp/Gallery
 #
@@ -79,3 +81,31 @@ brew install redis
 #       launchctl load ~/Library/LaunchAgents/homebrew.mxcl.redis.plist
 #   Or, if you don't want/need launchctl, you can just run:
 #       redis-server /usr/local/etc/redis.conf
+#
+#
+# 2014-10-31 since yosemite upgrade
+#
+
+# for older brew that supports versions
+    brew tap homebrew/boneyard
+
+# docker system
+brew install boot2docker
+brew install docker
+
+Started.
+Writing /Users/gleeco/.boot2docker/certs/boot2docker-vm/ca.pem
+Writing /Users/gleeco/.boot2docker/certs/boot2docker-vm/cert.pem
+Writing /Users/gleeco/.boot2docker/certs/boot2docker-vm/key.pem
+
+To connect the Docker client to the Docker daemon, please set:
+    export DOCKER_HOST=tcp://192.168.59.103:2376
+    export DOCKER_CERT_PATH=/Users/gleeco/.boot2docker/certs/boot2docker-vm
+    export DOCKER_TLS_VERIFY=1
+
+You can also easily ssh into the VM:
+
+boot2docker ssh
+User name : root
+Password : tcuser
+Once you've established the Docker host, you can follow the directions under Prepare Docker Host and Run a Container sections to get the project up and running.

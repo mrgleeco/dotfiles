@@ -101,3 +101,21 @@ When typing in insert or ex mode, hiting CTRL-V allows you to enter a literal ch
   CTRL-V 10 <enter> # enters a null character
 
 
+
+Binary files
+------------
+aka pesky git diff that carps about new line at end of file:
+
+    vim -b file and once in vim:
+
+:set noeol
+:wq
+done.
+
+alternatively you can open files in vim with :e ++bin file
+
+Yet another alternative:
+
+:set binary
+:set noeol
+:wq
