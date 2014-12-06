@@ -1,6 +1,8 @@
 
-fast_find() { 
-    find . -name ${1} |  grep -v "/.git/"  | xargs ls -dF | less -FX  
+# vim: ft=sh
+
+fast_find() {
+    find . -name ${1} |  grep -v "/.git/"  | xargs ls -dF | less -FX
 }
 
 cert_check() {
@@ -21,19 +23,21 @@ git_find(){
     git ls-files "*${1}*"
 }
 
-dict_find() { 
+dict_find() {
     grep "${1}" /usr/share/dict/words | less -FX
 }
 
-git_branch_diff(){ 
+git_branch_diff(){
     if [ ${1} ]; then
-        git log -p --graph $(git merge-base HEAD master)..${1}
+        // git log -p --graph $(git merge-base HEAD originmaster)..${1}
+        git log -p --graph origin/master..${1}
     else
-        git log -p --graph $(git merge-base HEAD master)..
+        // git log -p --graph $(git merge-base HEAD master)..
+        git log -p --graph origin/master..
     fi;
 }
 
-git_branch_hist(){ 
+git_branch_hist(){
     if [ ${1} ]; then
         git log --name-status $(git merge-base HEAD master)..${1}
     else
@@ -41,16 +45,32 @@ git_branch_hist(){
     fi;
 }
 
+grep_global_histories() {
+    # show earliest version of the command across all histories
+    ( cd ~/.history && grep "${1}" history.* | perl -ane 'm@\.(\d+): (\d+) (.*)@ or next; print if ! $h{$3}++' |sort -rn | less)
+}
 
+bamboo_ctl() {
+    cd ~/code/jut/product && ./scripts/bamboo-ctl.js $*
+}
+
+deployment_api(){
+    cd ~/code/jut/product && ./scripts/deployment-api.sh $*
+}
+
+export OM="origin/master"
+
+alias dpi=deployment_api
+alias bbx=bamboo_ctl
+alias cb='git rev-parse --abbrev-ref HEAD'
 alias ff=fast_find;
 alias x509=cert_check
 alias D=code_dir
 alias gfind=git_find
 alias brdiff=git_branch_diff
 alias brhist=git_branch_hist
-
-
-
+alias dict=dict_find
+alias lessr='less -R'
 
 # alias urldec="perl -ane 'for(1..2) { s/%([\da-f]{2})/pack("c",hex($1))/ige; } print;' ";
 # alias urldec='perl -e \'s/%([\da-f]{2})/pack("c",hex($1))/ige for @ARGV;  map { print "\n$_\n" } @ARGV\' ';
@@ -60,8 +80,9 @@ alias brhist=git_branch_hist
 alias ll='ls -lah'
 alias la='ls -lA'
 alias lR='ls -lRhG | less -FX'
-alias h='history' 
-alias hl='history | less' 
+alias h='history'
+alias hl='history | less'
+alias ghist=grep_global_histories
 alias j='jobs'
 alias c='clear'
 alias P='perl -c'
@@ -84,7 +105,7 @@ alias phplint='gdno | xargs -i php -l {} 2> /dev/null'
 
 alias colo='[ -f ~/.colo ] && cat ~/.colo'
 
-alias sdk='sudo docker'
+ alias sdk='sudo docker'
 
 alias gopwd='export GOPATH=${PWD}'
 
@@ -93,14 +114,13 @@ export DATE=$(date -u +%Y%m%d)
 
 # OS specific aliases
 case  $SYS in
-  # OSX -- 
+  # OSX --
   Darwin)
 
-    alias dict=dict_find
     alias tabti='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
 
     hub=`which hub`;
-    if [ -f $hub ]; then 
+    if [ -f $hub ]; then
         alias git=$hub;
     else
         alias git='/usr/local/git/bin/git'
@@ -111,6 +131,4 @@ case  $SYS in
 
     ;;
 esac;
-
-
 
