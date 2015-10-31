@@ -5,8 +5,12 @@ fast_find() {
     find . -name ${1} |  grep -v "/.git/"  | xargs ls -dF | less -FX
 }
 
-cert_check() {
+x509_check() {
     echo '' | openssl s_client -connect ${1}:443 2>/dev/null | openssl x509  -noout -text
+}
+
+tls_check() {
+    openssl x509 -text -noout -in ${1}
 }
 
 code_dir() {
@@ -19,12 +23,51 @@ code_dir() {
     fi;
 }
 
+pass_find() {
+    pass git ls-files "*${1}*" | perl -ane 's/.gpg$//; print'
+}
+pass_show() {
+    for f in $( pfind $1 ); do
+        echo "----- $f -----"
+        pass show $f;
+        echo ""
+    done
+}
+
+
+
+dict_find() {
+    grep "${1}" /usr/share/dict/words | less -FX
+}
+
 git_find(){
     git ls-files "*${1}*"
 }
 
-dict_find() {
-    grep "${1}" /usr/share/dict/words | less -FX
+
+
+git_stash_get() {
+    git show stash@{$1}:$2
+}
+
+
+git_stash_diffs() {
+    (
+    for i in {1..100}; do
+        echo
+        echo "----- STASH: stash@{$i} ------";
+        git stash show -p stash@{$i}
+    done
+    ) | less -FX
+}
+git_stash_list() {
+    (
+    for i in {1..100}; do
+        echo
+        echo "----- STASH: stash@{$i} ------";
+        git stash show  stash@{$i}
+    done
+    ) | less -FX
 }
 
 git_branch_diff(){
@@ -39,38 +82,80 @@ git_branch_diff(){
 
 git_branch_hist(){
     if [ ${1} ]; then
-        git log --name-status $(git merge-base HEAD master)..${1}
+        git log --name-status $(git merge-base HEAD origin/master)..${1}
     else
-        git log --name-status $(git merge-base HEAD master)..
+        git log --name-status $(git merge-base HEAD origin/master)..
     fi;
 }
 
 grep_global_histories() {
     # show earliest version of the command across all histories
-    ( cd ~/.history && grep "${1}" history.* | perl -ane 'm@\.(\d+): (\d+) (.*)@ or next; print if ! $h{$3}++' |sort -rn | less)
+    [ -d $HOME/.history ] && grep "${1}" $HOME/.history/history.* | perl -ane 'm@\.(\d+):\s*?(.*)@ or next; print "$1 $2\n" if ! $h{$2}++' |sort -rn | less
 }
 
 bamboo_ctl() {
-    cd ~/code/jut/product && ./scripts/bamboo-ctl.js $*
+    [ "$1" = "run" ] || [ "$1" = "status" ] || return
+    (cd ~/code/jut/product && ./scripts/bamboo-ctl.js $op $* )
 }
 
 deployment_api(){
-    cd ~/code/jut/product && ./scripts/deployment-api.sh $*
+    ( cd ~/code/jut/product && ./scripts/deployment-api.sh $* )
+}
+
+manifest_tool(){
+    ( cd ~/code/jut/product && ./scripts/manifest-tool.sh $* )
+}
+
+# show all akamai
+curl_akamai() {
+    curl -s -L -H "Pragma: akamai-x-cache-on, akamai-x-cache-remote-on, akamai-x-check-cacheable, akamai-x-get-cache-key, akamai-x-get-extracted-values, akamai-x-get-nonces, akamai-x-get-ssl-client-session-id, akamai-x-get-true-cache-key, akamai-x-serial-no" -IXGET $*
+}
+
+
+jut_nagios_prod_down() {
+    [ -z "$NAGIOS_PASS" ] && echo "missing nagios pass - no-op" && return
+    curl -d "cmd_mod=2&cmd_typ=11" "https://nagios01.sys.jut.io/cgi-bin/nagios3/cmd.cgi" -u "$NAGIOS_USER:$NAGIOS_PASS"
+}
+jut_nagios_prod_up() {
+    [ -z "$NAGIOS_PASS" ] && echo "missing nagios pass - no-op" && return
+    curl -d "cmd_mod=2&cmd_typ=12" "https://nagios01.sys.jut.io/cgi-bin/nagios3/cmd.cgi" -u "$NAGIOS_USER:$NAGIOS_PASS"
+}
+
+
+aws_internal_ip() {
+    ip=$(dig +short ${1})
+    h=$(dig +short -x $ip)
+    dig +short $h;
 }
 
 export OM="origin/master"
 
+alias ghist=grep_global_histories
 alias dpi=deployment_api
 alias bbx=bamboo_ctl
+alias mtool=manifest_tool
 alias cb='git rev-parse --abbrev-ref HEAD'
 alias ff=fast_find;
-alias x509=cert_check
+alias cert_check=tls_check
+alias x509=x509_check
 alias D=code_dir
 alias gfind=git_find
 alias brdiff=git_branch_diff
+alias brstat='git brstat'
 alias brhist=git_branch_hist
+alias stashlist=git_stash_list
+alias stashdiffs=git_stash_diffs
+alias stashget=git_stash_get
 alias dict=dict_find
-alias lessr='less -R'
+alias pfind=pass_find
+alias pshow=pass_show
+alias lessr='less -r'
+alias isodate='date +"%Y-%m-%dT%H:%M:%S%z"'
+alias gmdate='date -u +"%Y-%m-%dT%H:%M:%S%z"'
+alias tdate='date -u +"%Y%m%d%H%M%S"'
+alias akamai=curl_akamai
+alias jut_ip=aws_internal_ip
+alias s3='aws s3 --region us-east-1'
 
 # alias urldec="perl -ane 'for(1..2) { s/%([\da-f]{2})/pack("c",hex($1))/ige; } print;' ";
 # alias urldec='perl -e \'s/%([\da-f]{2})/pack("c",hex($1))/ige for @ARGV;  map { print "\n$_\n" } @ARGV\' ';
@@ -82,7 +167,6 @@ alias la='ls -lA'
 alias lR='ls -lRhG | less -FX'
 alias h='history'
 alias hl='history | less'
-alias ghist=grep_global_histories
 alias j='jobs'
 alias c='clear'
 alias P='perl -c'
@@ -90,7 +174,6 @@ alias l='less -fK' # -f force binary files; -F  -K exit on ^c
 alias loc='locate'
 alias px='perceus'
 alias reprofile='source ~/.bash_profile'
-alias reauth='( cd ~/code/jut/campfire && echo -e "\n\n\n" | node src/devutils/authorize/authorize.js)'
 
 alias tsq=' sort | uniq -c | sort -rn'
 alias socatty='socat -u TCP4-LISTEN:3334,reuseaddr,fork OPEN:/tmp/log.socatty.$USER,creat,append'
@@ -117,9 +200,9 @@ case  $SYS in
   # OSX --
   Darwin)
 
-    alias tabti='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
+     alias tabti='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
 
-    hub=`which hub`;
+    hub=$(which hub);
     if [ -f $hub ]; then
         alias git=$hub;
     else

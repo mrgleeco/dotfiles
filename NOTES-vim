@@ -1,9 +1,12 @@
+  " hello - double quote is comment in vim; see .vimrc for working ex.
   :so %       " reload the .vimrc you are editing"
 
   :set number  " turn on numbering"
   :set nu         "same
   :set nonumber   "turn off numbering"
   :set nonu         "same
+
+  :set spell   " turn on spell check; turn off with nospell"
 
 
 Working with tabs
@@ -83,6 +86,17 @@ Vim folding commands
   [z move to start of open fold.
   ]z move to end of open fold.
 
+Commenting code out
+------------------
+
+    aka https://github.com/scrooloose/nerdcommenter
+
+    usually always visual for me
+    <leader><cmd>  where leader is backslash key '\'
+    \cl  comment out left side
+    \cu  uncomment
+    \cs  sexy comment
+    \cm  block comment ie. C style /* before and then after */
 
 
 Chars/Unicode
