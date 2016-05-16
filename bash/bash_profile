@@ -11,9 +11,13 @@ export PS1='[\u@\h:\w]$ '
 export EDITOR=/usr/bin/vim
 export PAGER=/usr/bin/less
 export ACK_PAGER=/usr/bin/less
-export ORG=jut
+export ORG=planet
 
 [ -f $HOME/AWS.config ] && export AWS_CONFIG_FILE=$HOME/AWS.config
+
+# see $HOME/.aws/config for more here
+# [ -f $HOME/AWS.config ] && export AWS_CONFIG_FILE=$HOME/AWS.config
+# export AWS_DEFAULT_PROFILE=gleeco
 
 # TODO - multiple accounts
 [ -f $HOME/.github-api-token ] && export HOMEBREW_GITHUB_API_TOKEN=$(cat ~/.github-api-token)
@@ -27,16 +31,23 @@ HISTFILESIZE=0
 # then set HISTFILESIZE to a large value
 HISTFILESIZE=10000
 HISTSIZE=1000
+HISTTIMEFORMAT="[%F:%T] "
 
 
   #
 case $SYS in
     Darwin)
         # TODO: xcode gcc at /usr/bin vs. /opt/usr/local/bin
-        export PATH=/bin:/usr/local/bin:/usr/bin:/usr/sbin:/sbin:/usr/local/git/bin:/Developer/usr/bin:/opt/bin:/opt/usr/local/bin:~/bin
+        # adding $HOME stuff is later
+        export PATH=/usr/local/bin:/bin:/usr/bin:/sbin:/usr/sbin:/sbin:/usr/local/git/bin:/Developer/usr/bin
+        [ -d /opt/bin ] && export PATH=$PATH:/opt/bin
+        [ -d /opt/usr/local/bin ] && export PATH=$PATH:/opt/usr/local/bin
         # make system perl aware of local perlbrew  setup
+        [ -d ~/local/bin ] && export PATH=$PATH:~/local/bin
+        [ -d ~/bin ] && export PATH=$PATH:~/bin
         [ -d ~/perl5/lib/perl5 ] && cpanm --local-lib=~/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
-        [ -d /usr/local/go ] && export GOROOT=/usr/local/go
+        # [ -d /usr/local/go ] && export GOROOT=/usr/local/go
+        [ -d /usr/local/opt/go ] && export GOROOT=/usr/local/opt/go/libexec/bin
         [ -f ~/perl5/perlbrew/etc/bashrc ] && source ~/perl5/perlbrew/etc/bashrc
         [ -d /usr/local/lib/node_modules ] && export NODE_PATH=/usr/local/lib/node_modules
         ;;
@@ -52,7 +63,7 @@ esac;
 
 if [ $BASE ]; then
      export DEPOT=$BASE/depot
-     export PATH=$BASE/bin:/bin:/usr/bin:/usr/local/bin:$BASE/sbin:/usr/sbin:/sbin
+     export PATH=$BASE/bin:$PATH
      export MANPATH=$BASE/man:/usr/share/man:/usr/local/man
      export LD_LIBRARY_PATH=$BASE/lib:/lib:/usr/lib:/usr/local/lib
      export LD_RUN_PATH=$BASE/lib:/lib:/usr/lib:/usr/local/lib
@@ -60,11 +71,6 @@ if [ $BASE ]; then
      [ -d $BASE/lib/node_modules ] && export NODE_PATH=$NODE_PATH:/usr/local/node_modules
 fi
 
-#
-# conditional paths that may (not) exist
-#
-[ -d ~/local/bin ] && export PATH=$PATH:~/local/bin
-[ -d ~/bin ] && export PATH=$PATH:~/bin
 
 
 #
@@ -101,7 +107,16 @@ function setenv() { export "$1=$2"; }
 
 
 test -r $HOME/.bash_alias     && source $HOME/.bash_alias
-test -r $HOME/.bash_alias_ssh && source $HOME/.bash_alias_ssh 
+test -r $HOME/.bash_alias_ssh && source $HOME/.bash_alias_ssh
 test -x $HOME/local/bashrc    && for i in $HOME/local/bashrc/enabled/*.sh; do source $i; done
-test -r $HOME/.git-completion.sh &&  source $HOME/.git-completion.sh 
 
+# was part of dotfiles, new is using brew install `git bash-completion`
+# source /usr/local/etc/bash_completion.d/git-completion.bash
+# TESTING: export GITAWAREPROMPT=~/code/git-aware-prompt
+export CLICOLOR=1
+test -r $HOME/.git-completion.sh &&  source $HOME/.git-completion.sh
+# test -r $HOME/.git-prompt.sh &&  source $HOME/.git-prompt.sh
+# GIT_PS1_SHOWDIRTYSTATE=true
+# export PS1='[\u@\h \w$(__git_ps1)]\$ '
+#export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]$(__git_ps1)\$ "
+export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]\$ "

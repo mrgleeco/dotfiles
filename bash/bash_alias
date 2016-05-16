@@ -15,13 +15,34 @@ tls_check() {
 
 code_dir() {
     if [ -d ~/code/$ORG/$1 ]; then
-        cd ~/code/jut/$1
+        cd ~/code/$ORG/$1
     elif [ -d ~/code/$1 ]; then
         cd ~/code/$1
     else
         cd ~/code
     fi;
 }
+
+planet_index() {
+    d=$HOME/code/planet
+    idx=${d}/INDEX
+    [ -f $idx ] || return
+
+    if [ -n "${2}" ]; then
+        # (cd $d && grep ${1} ${idx} | xargs grep ${PL_NO_CASE_GREP} "${2}" )
+        (cd $d && grep ${1} ${idx} | xargs grep -i "${2}" 2> /dev/null)
+        # NOTE: brew install findutils for good xargs
+        # (cd $d && grep ${1} ${idx} | sh -c 'gxargs test -f {}' | gxargs -r grep -i "${2}" )
+        # (cd $d && grep ${1} ${idx} | sh -c 'gxargs test -f {}' | gxargs -r grep -i "${2}" )
+    else
+        grep ${1} ${idx}
+    fi
+}
+
+alias idx=planet_index
+
+
+
 
 pass_find() {
     pass git ls-files "*${1}*" | perl -ane 's/.gpg$//; print'
@@ -188,7 +209,8 @@ alias phplint='gdno | xargs -i php -l {} 2> /dev/null'
 
 alias colo='[ -f ~/.colo ] && cat ~/.colo'
 
- alias sdk='sudo docker'
+ alias sdk='docker'
+ alias dm='docker-machine'
 
 alias gopwd='export GOPATH=${PWD}'
 

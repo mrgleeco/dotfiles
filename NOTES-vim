@@ -115,6 +115,14 @@ When typing in insert or ex mode, hiting CTRL-V allows you to enter a literal ch
   CTRL-V 10 <enter> # enters a null character
 
 
+Delete huge blocks
+-----------------
+" go to line 13, mark it with 'x', then to line 42 and delete
+:13
+mx
+:42
+d'x
+
 
 Binary files
 ------------
