@@ -123,6 +123,10 @@ mx
 :42
 d'x
 
+Block edits
+-----------
+ctrl-V for column selection
+I - insert in block mode
 
 Binary files
 ------------
