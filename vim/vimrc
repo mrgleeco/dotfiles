@@ -3,6 +3,21 @@
 " to update bundles, do from cmd line:
 "   vim +BundleInstall +qall
 
+
+" use :Gist -P      ...for public if private is default
+" let g:gist_post_private = 1
+" for use with enterprise
+" let g:gist_api_url = 'http://your-github-enterprise-domain/api/v3'
+" let g:gist_show_privates = 1
+" store a token in ~/.gist-vim
+" ensure github user exists in .gitconfig
+" git config --global github.user gleeco
+let g:gist_post_private = 1
+
+
+" use pg_format via brew install pgFormatter
+au FileType sql setl formatprg=/usr/local/bin/pg_format\ -
+
 if match($TERM, "screen")!=-1
   set term=xterm
 endif
@@ -42,6 +57,9 @@ let g:airline_powerline_fonts=1
 
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
+
+
+nnoremap <leader>rd :redraw!<cr>
 
 " For regular expressions turn magic on
 " set magic
@@ -245,4 +263,13 @@ set pastetoggle=<F7> mouse=rnv
 augroup myvimrc
     au!
     au BufWritePost .vimrc, so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
+augroup END
+
+
+
+
+" set col > 80 as grey bg
+augroup vimrc_autocmds
+  autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#111111
+  autocmd BufEnter * match OverLength /\%80v.*/
 augroup END
