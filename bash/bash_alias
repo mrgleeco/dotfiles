@@ -6,11 +6,33 @@ fast_find() {
 }
 
 x509_check() {
-    echo '' | openssl s_client -connect ${1}:443 2>/dev/null | openssl x509  -noout -text
+    echo "echo '' | openssl s_client -connect ${1}:443 -servername ${1}  2>/dev/null | openssl x509  -noout -text"
+    echo '' | /usr/local/bin/openssl s_client -connect ${1}:443 -servername ${1}  2>/dev/null | openssl x509  -noout -text
+    # echo '' | openssl s_client -connect ${1}:443 2>/dev/null | openssl x509  -noout -text
+}
+
+# return a single line cert w/o linebreaks
+single_line_cert() {
+  cat ${1} |perl -ane 's!^(\-+)! $1!; s!(\-+)$!$1 !;  s!\r?\n!!; print'
 }
 
 tls_check() {
     openssl x509 -text -noout -in ${1}
+}
+
+dns_vpn_on() {
+    sudo rm /etc/resolv.conf && sudo ln -s /etc/resolv.conf-vpn /etc/resolv.conf && \
+    sudo launchctl unload /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist &&  \
+    sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
+}
+dns_vpn_off() {
+    sudo rm /etc/resolv.conf && sudo ln -s /etc/resolv.conf-goog /etc/resolv.conf && \
+    sudo launchctl unload /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist &&  \
+    sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
+}
+
+docker_cleanup() {
+    docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock spotify/docker-gc
 }
 
 code_dir() {
@@ -21,6 +43,10 @@ code_dir() {
     else
         cd ~/code
     fi;
+}
+
+docker_remove() {
+    docker ps -a |grep -vi running |grep -v CONTAINER |cut -d' ' -f 1|xargs docker rm
 }
 
 planet_index() {
@@ -66,29 +92,19 @@ git_find(){
 }
 
 
-
 git_stash_get() {
     git show stash@{$1}:$2
 }
 
 
 git_stash_diffs() {
-    (
-    for i in {1..100}; do
-        echo
-        echo "----- STASH: stash@{$i} ------";
-        git stash show -p stash@{$i}
-    done
-    ) | less -FX
+    git stash list -v  | \
+        perl -ane 'm/(stash.*?):/ and print "\n\n$_", qx!git stash show -v --color=always $1!'
 }
 git_stash_list() {
-    (
-    for i in {1..100}; do
-        echo
-        echo "----- STASH: stash@{$i} ------";
-        git stash show  stash@{$i}
-    done
-    ) | less -FX
+    # NB. --color makes it go full diff!
+    git stash list -v  | \
+        perl -ane 'm/(stash.*?):/ and print "\n\n$_", qx!git stash show $1!'
 }
 
 git_branch_diff(){
@@ -107,6 +123,22 @@ git_branch_hist(){
     else
         git log --name-status $(git merge-base HEAD origin/master)..
     fi;
+}
+
+git_submodule_reset() {
+    git submodule update --init;
+    git submodule foreach git reset --hard HEAD
+}
+
+git_commit_file() {
+    filename=${1:-}
+    msg=${2:-""}
+    git commit -m "GCF: $filename $msg" $filename
+}
+
+
+go_doc_explain() {
+    go doc ${1} 2>&1 |less
 }
 
 grep_global_histories() {
@@ -143,23 +175,41 @@ jut_nagios_prod_up() {
 }
 
 
+timed_history() {
+    HISTTIMEFORMAT="[%F:%T] " history
+
+}
+
 aws_internal_ip() {
     ip=$(dig +short ${1})
     h=$(dig +short -x $ip)
     dig +short $h;
 }
 
+lsof_size() {
+    sudo lsof -p ${1} | grep -v COMMAND |sort -r -n -k 7,7
+}
 export OM="origin/master"
 
+alias lsofsize=lsof_size
+
+alias th=timed_history
 alias ghist=grep_global_histories
 alias dpi=deployment_api
 alias bbx=bamboo_ctl
 alias mtool=manifest_tool
 alias cb='git rev-parse --abbrev-ref HEAD'
+alias br='git branch'
 alias ff=fast_find;
 alias cert_check=tls_check
 alias x509=x509_check
+alias x509_file=tls_check
+alias cert_flatten=single_line_cert
 alias D=code_dir
+alias GL='pushd ~/code/$ORG/gitlab'
+alias GLM='pushd ~/code/$ORG/gitlab/missions'
+alias GLG='pushd ~/code/$ORG/gitlab/gleeco'
+alias GLP='pushd ~/code/$ORG/gitlab/product'
 alias gfind=git_find
 alias brdiff=git_branch_diff
 alias brstat='git brstat'
@@ -167,16 +217,26 @@ alias brhist=git_branch_hist
 alias stashlist=git_stash_list
 alias stashdiffs=git_stash_diffs
 alias stashget=git_stash_get
+alias gru='git remote update'
+alias gcf=git_commit_file
+alias g.submodule_reset=git_submodule_reset
 alias dict=dict_find
 alias pfind=pass_find
 alias pshow=pass_show
+alias dns_vpn_on=dns_vpn_on
+alias dns_vpn_off=dns_vpn_off
 alias lessr='less -r'
 alias isodate='date +"%Y-%m-%dT%H:%M:%S%z"'
 alias gmdate='date -u +"%Y-%m-%dT%H:%M:%S%z"'
 alias tdate='date -u +"%Y%m%d%H%M%S"'
+alias udate='date +"%s"'
 alias akamai=curl_akamai
 alias jut_ip=aws_internal_ip
 alias s3='aws s3 --region us-east-1'
+alias mk='minikube'
+vim_exec=`which vim`
+alias vi=$vim_exec
+
 
 # alias urldec="perl -ane 'for(1..2) { s/%([\da-f]{2})/pack("c",hex($1))/ige; } print;' ";
 # alias urldec='perl -e \'s/%([\da-f]{2})/pack("c",hex($1))/ige for @ARGV;  map { print "\n$_\n" } @ARGV\' ';
@@ -193,29 +253,54 @@ alias c='clear'
 alias P='perl -c'
 alias l='less -fK' # -f force binary files; -F  -K exit on ^c
 alias loc='locate'
-alias px='perceus'
 alias reprofile='source ~/.bash_profile'
 
 alias tsq=' sort | uniq -c | sort -rn'
 alias socatty='socat -u TCP4-LISTEN:3334,reuseaddr,fork OPEN:/tmp/log.socatty.$USER,creat,append'
 
-alias cf-sql="~/local/postgres/bin/psql dev_cf"
-alias cf-sql-prod="psql -U user_gleeco prod_cf"
-alias cfp-sql='/home/cf/local/postgres/bin/psql dev_cfp'
-alias cf-env="source ~/local/cf-setup/auto/default_env.sh"
+alias sdk='docker'
+alias dm='docker-machine'
+alias sdk.rm=docker_remove
+alias sdk.gc=docker_cleanup
 
-alias gdno='git diff --name-only | egrep "(.php|.html)$"'
-alias phplint='gdno | xargs -i php -l {} 2> /dev/null'
-
-alias colo='[ -f ~/.colo ] && cat ~/.colo'
-
- alias sdk='docker'
- alias dm='docker-machine'
 
 alias gopwd='export GOPATH=${PWD}'
+alias gdx=go_doc_explain
 
 # not quite an alias...
 export DATE=$(date -u +%Y%m%d)
+
+alias ktl='kubectl'
+alias k='kubectl'
+alias kd='kubectl describe'
+alias kdd='kubectl describe deployment'
+alias kca='kubectl config get-contexts'
+alias kcc='kubectl config current-context'
+alias kdi='kubectl describe ing'
+alias kdp='kubectl describe pod'
+alias kdj='kubectl describe job'
+alias kdm='kubectl describe cm'
+alias kdn='kubectl describe node'
+alias kds='kubectl describe svc'
+alias kdx='kubectl describe secret'
+
+alias kg='kubectl get'
+alias kga='kubectl get all --all-namespaces'
+alias kgp='kubectl get po -o wide'
+alias kgd='kubectl get deployments -o wide'
+alias kgc='kubectl get configmaps -o wide'
+alias kgj='kubectl get jobs -o wide'
+alias kgm='kubectl get cm -o wide'
+alias kgp='kubectl get po -o wide'
+alias kgi='kubectl get ing -o wide'
+alias kgn='kubectl get no -o wide'
+alias kgs='kubectl get svc -o wide'
+alias kgv='kubectl get volumes -o wide'
+alias kgx='kubectl get secrets -o wide'
+
+alias kl='kubectl logs'
+alias klf='kubectl logs -f'
+
 
 # OS specific aliases
 case  $SYS in
@@ -223,6 +308,8 @@ case  $SYS in
   Darwin)
 
      alias tabti='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
+     alias vsc='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
+     alias vscode='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
 
     hub=$(which hub);
     if [ -f $hub ]; then
